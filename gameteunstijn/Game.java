@@ -1,8 +1,6 @@
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ * "GetTrump".
+ * The meaning of the game is to get the U.S. to extradite Trump from the U.S.
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
@@ -11,15 +9,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Stijn Wolthuis en Teun de Jong
+ * @version 1.0
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -34,30 +32,51 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
+        Room WhiteHouse, BlackVilla, TrumpTower, Cellar, StatueOfLiberty, TheSfinx;
+
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
+        WhiteHouse = new Room("The home of president Trump");
+        BlackVilla = new Room("The home of president Aliaune Damala Bouga Time Puru");
+        TrumpTower = new Room("One of many properties owned by president Trump");
+        Cellar = new Room("in a computing lab");
+        StatueOfLiberty = new Room("A great statue representing freedom");
+        TheSfinx = new Room("A great statue representing democracy");
+
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        WhiteHouse.setExit("north", TrumpTower);
+        WhiteHouse.setExit("east", BlackVilla);
+        WhiteHouse.setExit("south" , StatueOfLiberty);
 
-        theater.setExit("west", outside);
+        BlackVilla.setExit("north", Cellar);
+        BlackVilla.setExit("west", WhiteHouse);
+        BlackVilla.setExit("south" , TheSfinx);
 
-        pub.setExit("east", outside);
+        TrumpTower.setExit("south", WhiteHouse);
+        TrumpTower.setExit("east", Cellar);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        Cellar.setExit("south", BlackVilla);
+        Cellar.setExit("west", TrumpTower);
 
-        office.setExit("west", lab);
+        StatueOfLiberty.setExit("north", WhiteHouse);
+        StatueOfLiberty.setExit("east", TheSfinx);
 
-        currentRoom = outside;  // start game outside
+        TheSfinx.setExit("north", BlackVilla);
+        TheSfinx.setExit("west", StatueOfLiberty);
+
+        //outside.setExit("east", theater);
+        //outside.setExit("south", lab);
+        //outside.setExit("west", pub);
+
+        //theater.setExit("west", outside);
+
+        //pub.setExit("east", outside);
+
+        //lab.setExit("north", outside);
+        //lab.setExit("east", office);
+
+        //office.setExit("west", lab);
+
+        //currentRoom = outside;  // start game outside
     }
 
     /**
@@ -69,7 +88,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -85,11 +104,12 @@ public class Game
     {
         System.out.println();
         System.out.println("Welcome!");
-        System.out.println("You'll be playing the president of a fictional country called Bambicules.");
-        System.out.println("Your goal will be to ");
+        System.out.println("You'll be playing the president of the fictional country Bambicules, ");
+        System.out.println("called Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam");
+        System.out.println("Your goal will be to extradite president Trump from the U.S. of America.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        //System.out.println(currentRoom.getLongDescription());
     }
 
     /**
