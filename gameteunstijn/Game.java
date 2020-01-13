@@ -32,13 +32,13 @@ public class Game
      */
     private void createRooms()
     {
-        Room White_House, Black_Villa, Trump_Tower, Damala_Bouga_Cellar, Statue_Of_Liberty, The_Sfinx;
+        Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx;
 
         // create the rooms
         White_House = new Room("in the home of president Trump, The White House.");
-        Black_Villa = new Room("in the home of president Aliaune Damala Bouga Time Puru, The Black Villa.");
+        Black_Villa = new Room("in the home of president Akon, The Black Villa.");
         Trump_Tower = new Room("in one of many properties owned by president Trump, The Trump Tower.");
-        Damala_Bouga_Cellar = new Room("In the cellar of one of your properties.");
+        Akons_Cellar = new Room("In the cellar of one of your properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
         The_Sfinx = new Room("at the Sfinx, a great statue representing democracy");
 
@@ -47,15 +47,15 @@ public class Game
         White_House.setExit("east", Black_Villa);
         White_House.setExit("south" , Statue_Of_Liberty);
 
-        Black_Villa.setExit("north", Damala_Bouga_Cellar);
+        Black_Villa.setExit("north", Akons_Cellar);
         Black_Villa.setExit("west", White_House);
         Black_Villa.setExit("south" , The_Sfinx);
 
         Trump_Tower.setExit("south", White_House);
-        Trump_Tower.setExit("east", Damala_Bouga_Cellar);
+        Trump_Tower.setExit("east", Akons_Cellar);
 
-        Damala_Bouga_Cellar.setExit("south", Black_Villa);
-        Damala_Bouga_Cellar.setExit("west", Trump_Tower);
+        Akons_Cellar.setExit("south", Black_Villa);
+        Akons_Cellar.setExit("west", Trump_Tower);
 
         Statue_Of_Liberty.setExit("north", White_House);
         Statue_Of_Liberty.setExit("east", The_Sfinx);
@@ -93,9 +93,9 @@ public class Game
     {
         System.out.println();
         System.out.println("Welcome!");
-        System.out.println("You'll be playing the president of the fictional country Bambicules, ");
-        System.out.println("called Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam");
-        System.out.println("Your goal will be to extradite president Trump from the U.S. of America.");
+        System.out.println("You'll be playing as the president of the fictional country Bambicules, ");
+        System.out.println("called Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
+        System.out.println("Your goal will be to extradite president Trump from the United States of America.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         //System.out.println(currentRoom.getLongDescription());
@@ -139,7 +139,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("Try to extradite Trump from the U.S.");
-        System.out.println("You can do this by traveling to places.");
+        System.out.println("You can do this by traveling to places to see if something is going on there.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
