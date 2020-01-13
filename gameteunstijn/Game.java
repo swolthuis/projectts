@@ -32,51 +32,40 @@ public class Game
      */
     private void createRooms()
     {
-        Room WhiteHouse, BlackVilla, TrumpTower, Cellar, StatueOfLiberty, TheSfinx;
+        Room White_House, Black_Villa, Trump_Tower, Damala_Bouga_Cellar, Statue_Of_Liberty, The_Sfinx;
 
         // create the rooms
-        WhiteHouse = new Room("The home of president Trump");
-        BlackVilla = new Room("The home of president Aliaune Damala Bouga Time Puru");
-        TrumpTower = new Room("One of many properties owned by president Trump");
-        Cellar = new Room("in a computing lab");
-        StatueOfLiberty = new Room("A great statue representing freedom");
-        TheSfinx = new Room("A great statue representing democracy");
+        White_House = new Room("in the home of president Trump, The White House.");
+        Black_Villa = new Room("in the home of president Aliaune Damala Bouga Time Puru, The Black Villa.");
+        Trump_Tower = new Room("in one of many properties owned by president Trump, The Trump Tower.");
+        Damala_Bouga_Cellar = new Room("In the cellar of one of your properties.");
+        Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
+        The_Sfinx = new Room("at the Sfinx, a great statue representing democracy");
 
         // initialise room exits
-        WhiteHouse.setExit("north", TrumpTower);
-        WhiteHouse.setExit("east", BlackVilla);
-        WhiteHouse.setExit("south" , StatueOfLiberty);
+        White_House.setExit("north", Trump_Tower);
+        White_House.setExit("east", Black_Villa);
+        White_House.setExit("south" , Statue_Of_Liberty);
 
-        BlackVilla.setExit("north", Cellar);
-        BlackVilla.setExit("west", WhiteHouse);
-        BlackVilla.setExit("south" , TheSfinx);
+        Black_Villa.setExit("north", Damala_Bouga_Cellar);
+        Black_Villa.setExit("west", White_House);
+        Black_Villa.setExit("south" , The_Sfinx);
 
-        TrumpTower.setExit("south", WhiteHouse);
-        TrumpTower.setExit("east", Cellar);
+        Trump_Tower.setExit("south", White_House);
+        Trump_Tower.setExit("east", Damala_Bouga_Cellar);
 
-        Cellar.setExit("south", BlackVilla);
-        Cellar.setExit("west", TrumpTower);
+        Damala_Bouga_Cellar.setExit("south", Black_Villa);
+        Damala_Bouga_Cellar.setExit("west", Trump_Tower);
 
-        StatueOfLiberty.setExit("north", WhiteHouse);
-        StatueOfLiberty.setExit("east", TheSfinx);
+        Statue_Of_Liberty.setExit("north", White_House);
+        Statue_Of_Liberty.setExit("east", The_Sfinx);
 
-        TheSfinx.setExit("north", BlackVilla);
-        TheSfinx.setExit("west", StatueOfLiberty);
+        The_Sfinx.setExit("north", Black_Villa);
+        The_Sfinx.setExit("west", Statue_Of_Liberty);
 
-        //outside.setExit("east", theater);
-        //outside.setExit("south", lab);
-        //outside.setExit("west", pub);
 
-        //theater.setExit("west", outside);
 
-        //pub.setExit("east", outside);
-
-        //lab.setExit("north", outside);
-        //lab.setExit("east", office);
-
-        //office.setExit("west", lab);
-
-        //currentRoom = outside;  // start game outside
+        currentRoom = Black_Villa;  // start game at black villa
     }
 
     /**
@@ -94,7 +83,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thanks for playing, see you next time!");
     }
 
     /**
@@ -122,7 +111,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("Unfortunately, that is not a valid command. Type help for help.");
             return false;
         }
 
@@ -149,8 +138,8 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("Try to extradite Trump from the U.S.");
+        System.out.println("You can do this by traveling to places.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -164,7 +153,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
+            System.out.println("Fill in a direction i.e. north.");
             return;
         }
 
@@ -174,7 +163,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("Unfortunately, there is nothing this way.");
         }
         else {
             currentRoom = nextRoom;
@@ -190,7 +179,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            System.out.println("To quit, type quit?");
             return false;
         }
         else {
