@@ -36,11 +36,11 @@ public class Game
 
         // create the rooms
         White_House = new Room("in the home of president Trump, The White House.");
-        Black_Villa = new Room("in the home of president Akon, The Black Villa.");
+        Black_Villa = new Room("in your own home, The Black Villa.");
         Trump_Tower = new Room("in one of many properties owned by president Trump, The Trump Tower.");
-        Akons_Cellar = new Room("In the cellar of one of your properties.");
+        Akons_Cellar = new Room("In the cellar of one of your many properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
-        The_Sfinx = new Room("at the Sfinx, a great statue representing democracy");
+        The_Sfinx = new Room("at the Sfinx, a great statue representing communism");
 
         // initialise room exits
         White_House.setExit("north", Trump_Tower);
@@ -62,8 +62,6 @@ public class Game
 
         The_Sfinx.setExit("north", Black_Villa);
         The_Sfinx.setExit("west", Statue_Of_Liberty);
-
-
 
         currentRoom = Black_Villa;  // start game at black villa
     }
@@ -92,13 +90,18 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome!");
-        System.out.println("You'll be playing as the president of the fictional country Bambicules, ");
-        System.out.println("called Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
-        System.out.println("Your goal will be to extradite president Trump from the United States of America.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Hello !");
+        System.out.println("You'll be playing as the president of the fictional country Bambicules. ");
+        System.out.println("You're name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
+        System.out.println("To win you have to extradite president Trump from the United States of America.");
+        System.out.println("You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
+        System.out.println("Good luck and have fun!");
         System.out.println();
-        //System.out.println(currentRoom.getLongDescription());
+        System.out.println("For more help, type 'help'.");
+        System.out.println();
+        System.out.println("You'll start at your own home.");
+        System.out.println();
+        System.out.println(currentRoom.getLongDescription());
     }
 
     /**
@@ -140,7 +143,7 @@ public class Game
     {
         System.out.println("Try to extradite Trump from the U.S.");
         System.out.println("You can do this by traveling to places to see if something is going on there.");
-        System.out.println();
+        System.out.println("You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
         System.out.println("Your command words are:");
         parser.showCommands();
     }
@@ -153,7 +156,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("Fill in a direction i.e. north.");
+            System.out.println("Fill in a cardinal direction i.e. north.");
             return;
         }
 
@@ -179,7 +182,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
-            System.out.println("To quit, type quit?");
+            System.out.println("To quit, type 'quit'");
             return false;
         }
         else {
