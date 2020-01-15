@@ -17,6 +17,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+  //  private Stack previousRooms; moet er wel in
 
     /**
      * Create the game and initialise its internal map.
@@ -92,8 +93,8 @@ public class Game
         System.out.println();
         System.out.println("Hello !");
         System.out.println("You'll be playing as the president of the fictional country Bambicules. ");
-        System.out.println("You're name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
-        System.out.println("To win you have to extradite president Trump from the United States of America.");
+        System.out.println("Your name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
+        System.out.println("Your goal is to extradite president Trump from the United States of America.");
         System.out.println("You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
         System.out.println("Good luck and have fun!");
         System.out.println();
@@ -128,6 +129,10 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
+        else if (commandWord.equals("back")) {
+            
+            back(command);
+        }
         // else command not recognised.
         return wantToQuit;
     }
@@ -149,7 +154,7 @@ public class Game
     }
 
     /** 
-     * Try to in to one direction. If there is an exit, enter the new
+     * Try to go in to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
     private void goRoom(Command command) 
@@ -188,5 +193,10 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+
+    private void back(Command command) //   moet er ook wel in
+    {
+
     }
 }
