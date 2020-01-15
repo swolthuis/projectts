@@ -1,6 +1,8 @@
 /**
- * "GetTrump".
- * The meaning of the game is to get the U.S. to extradite Trump from the U.S.
+ *  This class is the main class of the "World of Zuul" application. 
+ *  "World of Zuul" is a very simple, text based adventure game.  Users 
+ *  can walk around some scenery. That's all. It should really be extended 
+ *  to make it more interesting!
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
@@ -9,16 +11,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Stijn Wolthuis en Teun de Jong
- * @version 1.0
+ * @author  Michael Kölling and David J. Barnes
+ * @version 2016.02.29
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-  //  private Stack previousRooms; moet er wel in
-
+    //  private Stack previousRooms; moet er wel in
     /**
      * Create the game and initialise its internal map.
      */
@@ -76,13 +77,13 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-
+                
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thanks for playing, see you next time!");
+        System.out.println("Thank you for playing.  Good bye.");
     }
 
     /**
@@ -114,26 +115,27 @@ public class Game
     {
         boolean wantToQuit = false;
 
-        if(command.isUnknown()) {
-            System.out.println("Unfortunately, that is not a valid command. Type help for help.");
-            return false;
-        }
+        CommandWord commandWord = command.getCommandWord();
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
-            printHelp();
+        switch (commandWord) {
+            case UNKNOWN:
+                System.out.println("I don't know what you mean...");
+                break;
+
+            case HELP:
+                printHelp();
+                break;
+
+            case GO:
+                goRoom(command);
+                break;
+
+            case QUIT:
+                wantToQuit = quit(command);
+                break;
+                
+            //moet nog case voor back bij!
         }
-        else if (commandWord.equals("go")) {
-            goRoom(command);
-        }
-        else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord.equals("back")) {
-            
-            back(command);
-        }
-        // else command not recognised.
         return wantToQuit;
     }
 
@@ -154,12 +156,12 @@ public class Game
     }
 
     /** 
-     * Try to go in to one direction. If there is an exit, enter the new
+     * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
     private void goRoom(Command command) 
     {
-        if(!command.hasSecondWord()) {
+         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Fill in a cardinal direction i.e. north.");
             return;
@@ -171,7 +173,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("Unfortunately, there is nothing this way.");
+            System.out.println("There is nothing there, Try another route.");
         }
         else {
             currentRoom = nextRoom;
@@ -194,7 +196,7 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-
+    
     private void back(Command command) //   moet er ook wel in
     {
 
