@@ -23,6 +23,10 @@ public class Game
     /**
      * Create the game and initialise its internal map.
      */
+    public static void main(String[] args) {
+        
+    }
+    
     public Game() 
     {
         createRooms();
@@ -77,7 +81,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -119,21 +123,30 @@ public class Game
 
         switch (commandWord) {
             case UNKNOWN:
-                System.out.println("I don't know what you mean...");
-                break;
+            System.out.println("I don't know what you mean...");
+            break;
 
             case HELP:
-                printHelp();
-                break;
+            printHelp();
+            break;
 
             case GO:
-                goRoom(command);
-                break;
+            goRoom(command);
+            break;
 
             case QUIT:
-                wantToQuit = quit(command);
-                break;
-                
+            wantToQuit = quit(command);
+            break;
+
+            case BACK:
+            goBack(command);
+            break;
+            
+            case ABOUT:
+            about(command);
+            break;
+
+            
             //moet nog case voor back bij!
         }
         return wantToQuit;
@@ -161,7 +174,7 @@ public class Game
      */
     private void goRoom(Command command) 
     {
-         if(!command.hasSecondWord()) {
+        if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Fill in a cardinal direction i.e. north.");
             return;
@@ -173,7 +186,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is nothing there, Try another route.");
+            System.out.println("There is nothing there, try another route.");
         }
         else {
             currentRoom = nextRoom;
@@ -196,9 +209,15 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
-    private void back(Command command) //   moet er ook wel in
-    {
 
+    private void goBack(Command command) //   moet er ook wel in
+    {
+        System.out.println("Hier moet de code om terug te gaan!");
+    }
+    
+    private void about(Command command) //   moet er ook wel in
+    {
+        System.out.println("Dit spel is gemaakt door Teun en Stijn, wij hebben hier met veel plezier aan gewerkt :) ");
     }
 }
+
