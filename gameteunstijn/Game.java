@@ -24,9 +24,9 @@ public class Game
      * Create the game and initialise its internal map.
      */
     public static void main(String[] args) {
-        
+        new Game().play();
     }
-    
+
     public Game() 
     {
         createRooms();
@@ -141,12 +141,11 @@ public class Game
             case BACK:
             goBack(command);
             break;
-            
+
             case ABOUT:
             about(command);
             break;
 
-            
             //moet nog case voor back bij!
         }
         return wantToQuit;
@@ -214,7 +213,7 @@ public class Game
     {
         System.out.println("Hier moet de code om terug te gaan!");
     }
-    
+
     private void about(Command command) //   moet er ook wel in
     {
         System.out.println("Dit spel is gemaakt door Teun en Stijn, wij hebben hier met veel plezier aan gewerkt :) ");
