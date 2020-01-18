@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,6 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private String kamer;
     //  private Stack previousRooms; moet er wel in
     /**
      * Create the game and initialise its internal map.
@@ -142,11 +144,14 @@ public class Game
             goBack(command);
             break;
 
+            case LOOK:
+            look(command);
+            break;
+
             case ABOUT:
             about(command);
             break;
 
-            //moet nog case voor back bij!
         }
         return wantToQuit;
     }
@@ -217,6 +222,27 @@ public class Game
     private void about(Command command) //   moet er ook wel in
     {
         System.out.println("Dit spel is gemaakt door Teun en Stijn, wij hebben hier met veel plezier aan gewerkt :) ");
+    }
+
+    public String spatieVerwijderen(){
+
+        kamer = currentRoom.getLongDescription();
+        kamer = kamer.replaceAll("\\s", ""); 
+        return kamer;
+    }
+
+    private void look(Command command) //   moet er ook wel in
+    {
+        if(spatieVerwijderen().equals("YouareinthehomeofpresidentTrump,TheWhiteHouse..Exits:eastsouth"))
+        {
+            System.out.println("You are in the Whitehouse of president Trump, you see allot of things");
+            
+        }else if(spatieVerwijderen().equals("Youareinyourownhome,TheBlackVilla..Exits:southnorthwest")){
+            System.out.println("You are in your own villa, you see allot " );
+            
+        }else if(false){
+            System.out.println("geen kamer gevonden om in te kijken");
+        }
     }
 }
 

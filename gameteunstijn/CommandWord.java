@@ -19,7 +19,9 @@ public enum CommandWord
     
     ABOUT("about"),
 
-    BACK("back");
+    BACK("back"),
+    
+    LOOK("look");
 
     // The command string.
     private String commandString;
