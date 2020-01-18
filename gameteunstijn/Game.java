@@ -1,8 +1,9 @@
+import java.util.*;
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  This class is the main class of the "Trumpnation" application. 
+ *  "Trumpnation" is a simple, text based adventure game.  Users 
+ *  can walk around the world and pick up items. That's all. The goal is 
+ *  to extradite Trump.
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
@@ -11,15 +12,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
- */
-
+ * @author  Stijn Wolthuis & Teun de Jong
+ * @version 2020.01.10
+ */ 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-    //  private Stack previousRooms; moet er wel in
+    private Stack<Room>prevLocation;
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -31,6 +32,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+
     }
 
     /**
@@ -38,7 +40,8 @@ public class Game
      */
     private void createRooms()
     {
-        Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx;
+        Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, 
+        Statue_Of_Liberty, The_Sfinx, Secret_Room;
 
         // create the rooms
         White_House = new Room("in the home of president Trump, The White House.");
@@ -47,6 +50,7 @@ public class Game
         Akons_Cellar = new Room("In the cellar of one of your many properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
         The_Sfinx = new Room("at the Sfinx, a great statue representing communism");
+        Secret_Room = new Room("Trapped, you have no idea where you are");
 
         // initialise room exits
         White_House.setExit("north", Trump_Tower);
@@ -76,9 +80,9 @@ public class Game
      *  Main play routine.  Loops until end of play.
      */
     public void play() 
-    {            
+    {               
         printWelcome();
-
+        prevLocation = new Stack();  
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
 
@@ -96,7 +100,7 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Hello !");
+        System.out.println("Hello and welcome to Trumpnation!");
         System.out.println("You'll be playing as the president of the fictional country Bambicules. ");
         System.out.println("Your name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
         System.out.println("Your goal is to extradite president Trump from the United States of America.");
@@ -108,6 +112,8 @@ public class Game
         System.out.println("You'll start at your own home.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
+        //Stack prevRooms = new Stack(); //Wat Tom had
+        System.out.println(currentRoom);
     }
 
     /**
@@ -146,12 +152,9 @@ public class Game
             about(command);
             break;
 
-            //moet nog case voor back bij!
         }
         return wantToQuit;
     }
-
-    // implementations of user commands:
 
     /**
      * Print out some help information.
@@ -171,8 +174,9 @@ public class Game
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
-    private void goRoom(Command command) 
+    private void goRoom(Command command)
     {
+
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Fill in a cardinal direction i.e. north.");
@@ -185,12 +189,16 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is nothing there, try another route.");
+            System.out.println("There is nothing there, try another cardinal direction.");
         }
         else {
+            prevLocation.push(currentRoom);
+            //System.out.println(prevRooms); //null
+            //System.out.println(currentRoom); //werkt
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
+
     }
 
     /** 
@@ -209,14 +217,26 @@ public class Game
         }
     }
 
-    private void goBack(Command command) //   moet er ook wel in
-    {
-        System.out.println("Hier moet de code om terug te gaan!");
+    private void goBack(Command command){
+        {   
+            if (prevLocation.empty()){
+                System.out.println("You can't go back any further");
+            }
+            else{
+                currentRoom = prevLocation.pop();
+                System.out.println(currentRoom.getLongDescription());
+
+            }
+        }
     }
 
-    private void about(Command command) //   moet er ook wel in
+    private void about(Command command)
     {
-        System.out.println("Dit spel is gemaakt door Teun en Stijn, wij hebben hier met veel plezier aan gewerkt :) ");
+        System.out.println("About: Trumpnation) ");
+        System.out.println("Authors: Stijn Wolthuis & Teun de Jong ");
+        System.out.println("ITV1H");
+        System.out.println("©2020");
     }
+
 }
 
