@@ -100,10 +100,10 @@ public class Game
         System.out.println("Hello and welcome to Trumpnation!");
         System.out.println("You'll be playing as the president of the fictional country Bambicules. ");
         System.out.println(
-                "Your name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
+            "Your name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
         System.out.println("Your goal is to extradite president Trump from the United States of America.");
         System.out.println(
-                "You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
+            "You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
         System.out.println("Good luck and have fun!");
         System.out.println();
         System.out.println("For more help, type 'help'.");
@@ -112,7 +112,6 @@ public class Game
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
         // Stack prevRooms = new Stack(); //Wat Tom had
-        System.out.println(currentRoom);
     }
 
     /**
@@ -127,31 +126,31 @@ public class Game
         final CommandWord commandWord = command.getCommandWord();
 
         switch (commandWord) {
-        case UNKNOWN:
+            case UNKNOWN:
             System.out.println("I don't know what you mean...");
             break;
 
-        case HELP:
+            case HELP:
             printHelp();
             break;
 
-        case GO:
+            case GO:
             goRoom(command);
             break;
 
-        case QUIT:
+            case QUIT:
             wantToQuit = quit(command);
             break;
 
-        case BACK:
+            case BACK:
             goBack(command);
             break;
 
-        case LOOK:
+            case LOOK:
             look(command);
             break;
 
-        case ABOUT:
+            case ABOUT:
             about(command);
             break;
 
@@ -167,7 +166,7 @@ public class Game
         System.out.println("Try to extradite Trump from the U.S.");
         System.out.println("You can do this by traveling to places to see if something is going on there.");
         System.out.println(
-                "You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
+            "You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
         System.out.println("Your command words are:");
         parser.showCommands();
     }
@@ -235,7 +234,7 @@ public class Game
         System.out.println("©2020");
     }
 
-    public String spatieVerwijderen() {
+    private String spatieVerwijderenVoorLook() {
 
         kamer = currentRoom.getLongDescription();
         kamer = kamer.replaceAll("\\s", "");
@@ -244,15 +243,27 @@ public class Game
 
     private void look(final Command command) // moet er ook wel in
     {
-        if(spatieVerwijderen().equals("YouareinthehomeofpresidentTrump,TheWhiteHouse..Exits:eastsouth"))
+        if(spatieVerwijderenVoorLook().equals("YouareinthehomeofpresidentTrump,TheWhiteHouse..Exits:eastsouthnorth"))
         {
-            System.out.println("You are in the Whitehouse of president Trump, you see allot of things");
+            System.out.println("I am in the Whitehouse of president Trump.");
+
+        }else if(spatieVerwijderenVoorLook().equals("Youareinyourownhome,TheBlackVilla..Exits:southnorthwest")){
+            System.out.println("You are in your own villa, I see allot " );
+
+        }else if(spatieVerwijderenVoorLook().equals("YouareinoneofmanypropertiesownedbypresidentTrump,TheTrumpTower..Exits:eastsouth")){
+            System.out.println("I look in the sky and see the huge tower scrapping the sky");   
+
+        }else if(spatieVerwijderenVoorLook().equals("YouareInthecellarofoneofyourmanyproperties..Exits:southwest")){
+            System.out.println("It`s very dark in here I should bring a light source");
+
+        }else if(spatieVerwijderenVoorLook().equals("YouareattheStatueofLiberty,agreatstatuerepresentingfreedom.Exits:eastnorth")){
+            System.out.println("I look around and I see the great Statue of Liberty in all it`s glory");
+
+        }else if(spatieVerwijderenVoorLook().equals("YouareattheSfinx,agreatstatuerepresentingcommunism.Exits:northwest")){
+            System.out.println("I see a big giant cat build by my people"); 
             
-        }else if(spatieVerwijderen().equals("Youareinyourownhome,TheBlackVilla..Exits:southnorthwest")){
-            System.out.println("You are in your own villa, you see allot " );
-            
-        }else if(false){
-            System.out.println("geen kamer gevonden om in te kijken");
+        }else{
+            System.out.println("That`s weird I can`t see anything, maybe I should try again later");
         }
     }
 }
