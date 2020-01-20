@@ -1,3 +1,4 @@
+
 import java.util.*;
 /**
  *  This class is the main class of the "Trumpnation" application. 
@@ -20,8 +21,8 @@ public class Game
     private final Parser parser;
     private Room currentRoom;
     private String kamer;
-    // private Stack previousRooms; moet er wel in
     private Stack<Room> prevLocation;
+    private ArrayList inventory;
 
     /**
      * Create the game and initialise its internal map.
@@ -40,16 +41,20 @@ public class Game
      * Create all the rooms and link their exits together.
      */
     private void createRooms() {
+        ArrayList<Item> itemsWH = new ArrayList();
+        itemsWH.add(new Item("key", 10));
+        itemsWH.add(new Item("book"));
         Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx, Secret_Room;
 
         // create the rooms
-        White_House = new Room("in the home of president Trump, The White House.");
+        White_House = new Room("in the home of president Trump, The White House.", itemsWH);
         Black_Villa = new Room("in your own home, The Black Villa.");
         Trump_Tower = new Room("in one of many properties owned by president Trump, The Trump Tower.");
         Akons_Cellar = new Room("In the cellar of one of your many properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
         The_Sfinx = new Room("at the Sfinx, a great statue representing communism");
         Secret_Room = new Room("Trapped, you have no idea where you are");
+        //System.out.println(White_House.getItems()   );
 
         // initialise room exits
         White_House.setExit("north", Trump_Tower);
@@ -154,6 +159,13 @@ public class Game
             about(command);
             break;
 
+            case TAKE:
+            take(command);
+            break;
+
+            case USE:
+            use(command);
+            break;
         }
         return wantToQuit;
     }
@@ -245,7 +257,7 @@ public class Game
     {
         if(spatieVerwijderenVoorLook().equals("YouareinthehomeofpresidentTrump,TheWhiteHouse..Exits:eastsouthnorth"))
         {
-            System.out.println("I am in the Whitehouse of president Trump.");
+            System.out.println("I am in the Whitehouse of president Trump." + currentRoom.getItems());
 
         }else if(spatieVerwijderenVoorLook().equals("Youareinyourownhome,TheBlackVilla..Exits:southnorthwest")){
             System.out.println("You are in your own villa, I see allot " );
@@ -261,10 +273,20 @@ public class Game
 
         }else if(spatieVerwijderenVoorLook().equals("YouareattheSfinx,agreatstatuerepresentingcommunism.Exits:northwest")){
             System.out.println("I see a big giant cat build by my people"); 
-            
+
         }else{
             System.out.println("That`s weird I can`t see anything, maybe I should try again later");
         }
+    }
+
+    private void take(final Command command) {
+        {
+
+        }
+    }
+
+    private void use(final Command command) {
+
     }
 }
 
