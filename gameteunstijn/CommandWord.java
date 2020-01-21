@@ -26,7 +26,11 @@ public enum CommandWord
     
     TAKE("take"),
     
-    USE("use");
+    USE("use"),
+    
+    DROP ("drop"),
+    
+    INVENTORY("inventory");
 
     // The command string.
     private String commandString;

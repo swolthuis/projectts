@@ -10,37 +10,24 @@ public class Item
     // instance variables - vervang deze door jouw variabelen
     private int weight ;
     private String name ;
-    private String ItemDescription ;
+    private String description ;
     /**
      * Constructor voor objects van class Items
      */
-    public Item(String name)
-    {
-        this.name = name;
-        weight = 0;
-    }
 
     /**
      * Constructor voor objects van class Items
      */
-    public Item(String name, int weight, String ItemDescription)
+    public Item(String newdescription)
     {
-        this.name = name;
-        this.weight = weight;
-        this.ItemDescription = ItemDescription;
+        // initialise instance variables
+        description = newdescription;
     }
 
-    public String getName()
+    public String getDescription()
     {
-        return name;
+        return description;
     }
 
-    public String getItemDescription(){
-        return ItemDescription;
-    }
-    
-    public int getWeight(){
-        return weight;
-    }
-    
 }
+

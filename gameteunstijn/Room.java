@@ -17,7 +17,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-    public ArrayList<Item> items;
+    ArrayList<Item> items = new ArrayList<Item>();
 
     /**
      * Create a room described "description". Initially, it has
@@ -25,16 +25,10 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, ArrayList<Item> items) 
+    public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<>();
-        this.items = items;
-    }
-
-    public Room(String description) 
-    {
-        this(description, new ArrayList());
     }
 
     /**
@@ -79,6 +73,8 @@ public class Room
         for(String exit : keys) {
             returnString += " " + exit;
         }
+        returnString += "\nItems on this location: \n";
+        returnString += getRoomItems() + " ";
         return returnString;
     }
 
@@ -93,14 +89,39 @@ public class Room
         return exits.get(direction);
     }
 
-    public String getItems()
-    {
-        String returnString = "";
-        for(Item item : items) {
-            returnString += "Item: " + item.getName() + " ---Desciption: "+ item.getItemDescription() + " ---Weight:" + item.getWeight() + System.getProperty("line.separator");;
-        }
-        return returnString;
+    public Item getItem(int index){
+        return items.get(index);
     }
 
+    public Item getItem(String itemName){
+        for(int i=0; i< items.size(); i++){
+            if(items.get(i).getDescription().equals(itemName)){
+                return items.get(i);
+            }
+        }
+        return null;
     }
+
+    public void removeItem(String itemName){
+        for(int i=0; i< items.size(); i++){
+            if(items.get(i).getDescription().equals(itemName)){
+                items.remove(i);
+            }
+        }
+    }
+
+    public void setItem(Item newitem){
+        items.add(newitem);
+
+    }
+
+    public String getRoomItems(){
+        String output = "";
+        for(int i =0; i< items.size(); i++){
+            output += items.get(i).getDescription() + " " ;
+        }
+        return output;
+    }
+
+}
 

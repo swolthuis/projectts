@@ -22,7 +22,7 @@ public class Game
     private Room currentRoom;
     private String kamer;
     private Stack<Room> prevLocation;
-    private ArrayList inventory;
+    ArrayList<Item> inventory = new ArrayList<Item>();
 
     /**
      * Create the game and initialise its internal map.
@@ -42,13 +42,13 @@ public class Game
      */
     private void createRooms() {
         ArrayList<Item> itemsWH = new ArrayList();
-        itemsWH.add(new Item("key", 5, "Weird key, wonder where it brings me"));
-        itemsWH.add(new Item("book", 10, "fifty shades of grey"));
-        itemsWH.add(new Item("poster", 5, "Obama poster"));
+        //itemsWH.add(new Item("key", 5, "Weird key, wonder where it brings me"));
+        //itemsWH.add(new Item("book", 10, "fifty shades of grey"));
+        //itemsWH.add(new Item("poster", 5, "Obama poster"));
         Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx, Secret_Room;
 
         // create the rooms
-        White_House = new Room("in the home of president Trump, The White House.", itemsWH);
+        White_House = new Room("in the home of president Trump, The White House.");
         Black_Villa = new Room("in your own home, The Black Villa.");
         Trump_Tower = new Room("in one of many properties owned by president Trump, The Trump Tower.");
         Akons_Cellar = new Room("In the cellar of one of your many properties.");
@@ -78,6 +78,8 @@ public class Game
         The_Sfinx.setExit("north", Black_Villa);
         The_Sfinx.setExit("west", Statue_Of_Liberty);
 
+        White_House.setItem(new Item("key"));
+        White_House.setItem(new Item("book"));
         currentRoom = Black_Villa; // start game at black villa
     }
 
@@ -118,7 +120,6 @@ public class Game
         System.out.println("You'll start at your own home.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
-        // Stack prevRooms = new Stack(); //Wat Tom had
     }
 
     /**
@@ -162,12 +163,21 @@ public class Game
             break;
 
             case TAKE:
-            take(command);
+            getItem(command);
             break;
 
             case USE:
             use(command);
             break;
+
+            case DROP:
+            dropItem(command);
+            break;
+
+            case INVENTORY:
+            printInventory();
+            break;
+
         }
         return wantToQuit;
     }
@@ -179,8 +189,8 @@ public class Game
     private void printHelp() {
         System.out.println("Try to extradite Trump from the U.S.");
         System.out.println("You can do this by traveling to places to see if something is going on there.");
-        System.out.println(
-            "You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
+        System.out.println("Travel from location to location and pick up items you deem necessary for your adventure"); 
+        System.out.println("To get you started, type 'go' and a cardinal direction e.g. 'north'.");
         System.out.println("Your command words are:");
         parser.showCommands();
     }
@@ -246,65 +256,124 @@ public class Game
         System.out.println("©2020");
     }
 
-    private String spatieVerwijderenVoorLook() {
-
+    private String LookPrepare() {
         kamer = currentRoom.getLongDescription();
-        kamer = kamer.replaceAll("\\s", "");
         return kamer;
     }
 
     private void look(final Command command) 
     {
-        if(spatieVerwijderenVoorLook().equals("YouareinthehomeofpresidentTrump,TheWhiteHouse..Exits:eastsouthnorth"))
+        if(LookPrepare().contains(("in the home of president Trump, The White House")))
         {
-            System.out.println("Currently I'm in the White House, there are several items I could try to interact with.");
+            System.out.println("Currently I'm at the White House, there are several items I could try to interact with.");
             System.out.println("");
-            System.out.println(currentRoom.getItems());
             //System.out.println(currentRoom.getItemDescription());
-        }else if(spatieVerwijderenVoorLook().equals("Youareinyourownhome,TheBlackVilla..Exits:southnorthwest")){
-            System.out.println("You are in your own villa, I see allot " );
+        }else if(LookPrepare().contains("in your own home, The Black Villa")){
+            System.out.println("I'm home, maybe there are some interesting items I could take with me." );
 
-        }else if(spatieVerwijderenVoorLook().equals("YouareinoneofmanypropertiesownedbypresidentTrump,TheTrumpTower..Exits:eastsouth")){
-            System.out.println("I look in the sky and see the huge tower scrapping the sky");   
+        }else if(LookPrepare().contains("in one of many properties owned by president Trump, The Trump Tower")){
+            System.out.println("I'm at the Trump Tower, there are a few interesting things I see.");
+            System.out.println("There is a big door that says DONALD ONLY, I wonder where that would bring me.");
+            System.out.println("Unfortunately it's locked, for now...");
 
-        }else if(spatieVerwijderenVoorLook().equals("YouareInthecellarofoneofyourmanyproperties..Exits:southwest")){
-            System.out.println("It`s very dark in here I should bring a light source");
+        }else if(LookPrepare().contains("In the cellar of one of your many properties")){
+            System.out.println("A cellar, that would be a great place for Trump.");
+            System.out.println("For now, this isn't the most interesting of places.");
 
-        }else if(spatieVerwijderenVoorLook().equals("YouareattheStatueofLiberty,agreatstatuerepresentingfreedom.Exits:eastnorth")){
-            System.out.println("I look around and I see the great Statue of Liberty in all it`s glory");
+        }else if(LookPrepare().contains("at the Statue of Liberty, a great statue representing freedom")){
+            System.out.println("There is a big statue in front of me, personally, I don't see why this is such a big deal.");
+            System.out.println("They should see The Great Sfinx build for me.");
 
-        }else if(spatieVerwijderenVoorLook().equals("YouareattheSfinx,agreatstatuerepresentingcommunism.Exits:northwest")){
-            System.out.println("I see a big giant cat build by my people"); 
+        }else if(LookPrepare().contains("at the Sfinx, a great statue representing communism")){
+            System.out.println("Now this, this is a big, amazing, fancy, great, cool, fabulous, titanic, remarkable"); 
+            System.out.println("superior, noble, outstanding, glorious, prominent, renowned statue.");
+            System.out.println("I wonder if there are more interesting things here");
 
         }else{
-            System.out.println("That`s weird I can`t see anything, maybe I should try again later");
+            System.out.println("That`s weird I can`t see anything, perhaps I should try again later");
         }
     }
 
-    private void take(final Command command) 
+    private void getItem(Command command) 
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to pickup..
-            System.out.println("Take requires a second word i.e. key");
+            System.out.println("Get what?");
             return;
         }
-        String varitem = command.getSecondWord();
-        if (currentRoom.getItems().contains(varitem)){
-                       
-            System.out.println("Item added to inventory : " + varitem);
-            
-                
-            inventory.add(varitem);
-            //currentRoom.items.remove(varitem); DEZE WERKT NIET, MOET INDEX ZIJN 
 
-            System.out.println("Current inventory: " +inventory);
-        }
-        else 
-        {
-            System.out.println("The item you're looking for, isn't in this room.");
-        }
+        String item = command.getSecondWord();
+        Item newItem = currentRoom.getItem(item);
 
+        if(newItem == null){
+            System.out.println("There is no item in this room");
+        }
+        else{
+            inventory.add(newItem);
+            currentRoom.removeItem(item);
+            System.out.println("Picked up: " + item); 
+        }
     }
+
+    private void dropItem(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what to drop...
+            System.out.println("Wait a minute drop what?");
+            return;
+        }
+
+        String item = command.getSecondWord();
+        Item newItem = null;
+        int index = 0;
+        for(int i =0; i< inventory.size(); i++){
+            if(inventory.get(i).getDescription().equals(item)){
+                newItem = inventory.get(i);
+                index = i;
+            }
+        }
+
+        if(newItem == null){
+            System.out.println("You cant drop something what you dont have");
+        }
+        else{
+            inventory.remove(index);
+            currentRoom.setItem(new Item (item));
+            System.out.println("Dropped: " + item); 
+        }
+    }
+
+    private void printInventory(){
+        String output = "";
+        for(int i =0; i< inventory.size(); i++){
+            output += inventory.get(i).getDescription() + " " ;
+        }
+        System.out.println("you are carrying:");
+        System.out.println(output);
+    }
+    // private void take(final Command command) 
+    // {
+    //if(!command.hasSecondWord()) {
+    // if there is no second word, we don't know what to pickup..
+    //  System.out.println("Take requires a second word i.e. key");
+    //  return;
+    //}
+    //String varitem = command.getSecondWord();
+    //if (currentRoom.getItems().contains(varitem)){
+
+    //  System.out.println("Item added to inventory : " + varitem);
+
+    //  inventory.add(varitem);
+    //currentRoom.items.remove(varitem); DEZE WERKT NIET, MOET INDEX ZIJN 
+
+    //  System.out.println("Current inventory: " +inventory);
+    //}
+    //   else 
+    // {
+    //     System.out.println("The item you're looking for, isn't in this room.");
+    // }
+
+    //}
 
     private void use(final Command command) {
     }
