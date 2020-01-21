@@ -17,7 +17,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-    private ArrayList<Item> items;
+    public ArrayList<Item> items;
 
     /**
      * Create a room described "description". Initially, it has
@@ -95,11 +95,12 @@ public class Room
 
     public String getItems()
     {
-        String returnString = "Items:";
+        String returnString = "";
         for(Item item : items) {
-            returnString += " " + item.getName();
+            returnString += "Item: " + item.getName() + " ---Desciption: "+ item.getItemDescription() + " ---Weight:" + item.getWeight() + System.getProperty("line.separator");;
         }
         return returnString;
     }
-}
+
+    }
 

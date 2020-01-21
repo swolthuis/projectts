@@ -42,8 +42,9 @@ public class Game
      */
     private void createRooms() {
         ArrayList<Item> itemsWH = new ArrayList();
-        itemsWH.add(new Item("key", 10));
-        itemsWH.add(new Item("book"));
+        itemsWH.add(new Item("key", 5, "Weird key, wonder where it brings me"));
+        itemsWH.add(new Item("book", 10, "fifty shades of grey"));
+        itemsWH.add(new Item("poster", 5, "Obama poster"));
         Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx, Secret_Room;
 
         // create the rooms
@@ -86,6 +87,7 @@ public class Game
     public void play() {
         printWelcome();
         prevLocation = new Stack();
+        inventory = new ArrayList();
         // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
@@ -204,8 +206,6 @@ public class Game
             System.out.println("There is nothing there, try another cardinal direction.");
         } else {
             prevLocation.push(currentRoom);
-            // System.out.println(prevRooms); //null
-            // System.out.println(currentRoom); //werkt
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -253,12 +253,14 @@ public class Game
         return kamer;
     }
 
-    private void look(final Command command) // moet er ook wel in
+    private void look(final Command command) 
     {
         if(spatieVerwijderenVoorLook().equals("YouareinthehomeofpresidentTrump,TheWhiteHouse..Exits:eastsouthnorth"))
         {
-            System.out.println("I am in the Whitehouse of president Trump." + currentRoom.getItems());
-
+            System.out.println("Currently I'm in the White House, there are several items I could try to interact with.");
+            System.out.println("");
+            System.out.println(currentRoom.getItems());
+            //System.out.println(currentRoom.getItemDescription());
         }else if(spatieVerwijderenVoorLook().equals("Youareinyourownhome,TheBlackVilla..Exits:southnorthwest")){
             System.out.println("You are in your own villa, I see allot " );
 
@@ -279,14 +281,31 @@ public class Game
         }
     }
 
-    private void take(final Command command) {
-        {
-
+    private void take(final Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what to pickup..
+            System.out.println("Take requires a second word i.e. key");
+            return;
         }
+        String varitem = command.getSecondWord();
+        if (currentRoom.getItems().contains(varitem)){
+                       
+            System.out.println("Item added to inventory : " + varitem);
+            
+                
+            inventory.add(varitem);
+            //currentRoom.items.remove(varitem); DEZE WERKT NIET, MOET INDEX ZIJN 
+
+            System.out.println("Current inventory: " +inventory);
+        }
+        else 
+        {
+            System.out.println("The item you're looking for, isn't in this room.");
+        }
+
     }
 
     private void use(final Command command) {
-
     }
 }
-
