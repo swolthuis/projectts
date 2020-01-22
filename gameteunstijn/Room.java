@@ -17,8 +17,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-    ArrayList<Item> items = new ArrayList<Item>();
-
+    private HashMap <String,Item> itemsInRoom = new HashMap<String, Item>();
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -89,36 +88,23 @@ public class Room
         return exits.get(direction);
     }
 
-    public Item getItem(int index){
-        return items.get(index);
-    }
-
-    public Item getItem(String itemName){
-        for(int i=0; i< items.size(); i++){
-            if(items.get(i).getDescription().equals(itemName)){
-                return items.get(i);
-            }
-        }
-        return null;
+    public Item getItem(String name){
+        return itemsInRoom.get(name);
     }
 
     public void removeItem(String itemName){
-        for(int i=0; i< items.size(); i++){
-            if(items.get(i).getDescription().equals(itemName)){
-                items.remove(i);
-            }
-        }
+        itemsInRoom.remove(itemName);
+
     }
 
     public void setItem(Item newitem){
-        items.add(newitem);
-
+        itemsInRoom.put(newitem.name, newitem);
     }
 
     public String getRoomItems(){
         String output = "";
-        for(int i =0; i< items.size(); i++){
-            output += items.get(i).getDescription() + " " ;
+        for(String itemName : itemsInRoom.keySet()){
+            output += itemsInRoom.get(itemName).name + " " ;
         }
         return output;
     }

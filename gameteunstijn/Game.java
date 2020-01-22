@@ -22,7 +22,7 @@ public class Game
     private Room currentRoom;
     private String kamer;
     private Stack<Room> prevLocation;
-    ArrayList<Item> inventory = new ArrayList<Item>();
+    private HashMap <String,Item> inventory = new HashMap<String, Item>();
 
     /**
      * Create the game and initialise its internal map.
@@ -42,9 +42,6 @@ public class Game
      */
     private void createRooms() {
         ArrayList<Item> itemsWH = new ArrayList();
-        //itemsWH.add(new Item("key", 5, "Weird key, wonder where it brings me"));
-        //itemsWH.add(new Item("book", 10, "fifty shades of grey"));
-        //itemsWH.add(new Item("poster", 5, "Obama poster"));
         Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx, Secret_Room;
 
         // create the rooms
@@ -77,9 +74,11 @@ public class Game
 
         The_Sfinx.setExit("north", Black_Villa);
         The_Sfinx.setExit("west", Statue_Of_Liberty);
-
-        White_House.setItem(new Item("key"));
-        White_House.setItem(new Item("book"));
+        //initialise items
+        White_House.setItem(new Item("key", 5, "Weird key, wonder where it goes"));
+        White_House.setItem(new Item("book", 10, "Book, 50 shades of grey"));
+        White_House.setItem(new Item("poster", 3, "Poster, Obama poster"));
+        Trump_Tower.setItem(new Item("Eric", 65, "Eric, sicke legend ")); 
         currentRoom = Black_Villa; // start game at black villa
     }
 
@@ -89,8 +88,7 @@ public class Game
     public void play() {
         printWelcome();
         prevLocation = new Stack();
-        inventory = new ArrayList();
-        // Enter the main command loop. Here we repeatedly read commands and
+               // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
         boolean finished = false;
@@ -302,16 +300,16 @@ public class Game
             return;
         }
 
-        String item = command.getSecondWord();
-        Item newItem = currentRoom.getItem(item);
+        String itemName = command.getSecondWord();
+        Item newItem = currentRoom.getItem(itemName);
 
         if(newItem == null){
             System.out.println("There is no item in this room");
         }
         else{
-            inventory.add(newItem);
-            currentRoom.removeItem(item);
-            System.out.println("Picked up: " + item); 
+            inventory.put(itemName, newItem);
+            currentRoom.removeItem(itemName);
+            System.out.println("Picked up: " + itemName); 
         }
     }
 
@@ -323,30 +321,22 @@ public class Game
             return;
         }
 
-        String item = command.getSecondWord();
-        Item newItem = null;
-        int index = 0;
-        for(int i =0; i< inventory.size(); i++){
-            if(inventory.get(i).getDescription().equals(item)){
-                newItem = inventory.get(i);
-                index = i;
-            }
-        }
-
+        String itemName = command.getSecondWord();
+        Item newItem = inventory.get(itemName);
         if(newItem == null){
             System.out.println("You cant drop something what you dont have");
         }
         else{
-            inventory.remove(index);
-            currentRoom.setItem(new Item (item));
-            System.out.println("Dropped: " + item); 
+            inventory.remove(itemName);
+            currentRoom.setItem(newItem);
+            System.out.println("Dropped: " + itemName); 
         }
     }
 
     private void printInventory(){
         String output = "";
-        for(int i =0; i< inventory.size(); i++){
-            output += inventory.get(i).getDescription() + " " ;
+        for(String itemName : inventory.keySet()){
+            output += inventory.get(itemName).getDescription() + " Weight: " + inventory.get(itemName).getWeight() + "\n";
         }
         System.out.println("you are carrying:");
         System.out.println(output);

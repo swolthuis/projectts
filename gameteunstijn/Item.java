@@ -8,9 +8,9 @@ import java.util.*;
 public class Item
 {
     // instance variables - vervang deze door jouw variabelen
-    private int weight ;
-    private String name ;
-    private String description ;
+    public int weight ;
+    public String name ;
+    public String description ;
     /**
      * Constructor voor objects van class Items
      */
@@ -18,16 +18,21 @@ public class Item
     /**
      * Constructor voor objects van class Items
      */
-    public Item(String newdescription)
+    public Item(String name, int weight, String description)
     {
-        // initialise instance variables
-        description = newdescription;
+        this.description = description;
+        this.weight = weight;
+        this.name = name;
     }
 
     public String getDescription()
     {
         return description;
     }
-
+    
+    public int getWeight()
+    {
+        return weight;
+    }
 }
 
