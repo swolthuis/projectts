@@ -1,4 +1,4 @@
-
+import java.time.LocalTime; 
 import java.util.*;
 /**
  *  This class is the main class of the "Trumpnation" application. 
@@ -25,6 +25,7 @@ public class Game
     private HashMap <String,Item> inventory = new HashMap<String, Item>();
     private Timer timer;
     private Menu menu;
+    private Boolean finished;
     /**
      * Create the game and initialise its internal map.
      */
@@ -33,6 +34,7 @@ public class Game
     }
 
     public Game() {
+        this.finished = false;
         createRooms();
         parser = new Parser();
         timer = new Timer();
@@ -104,15 +106,15 @@ public class Game
     public void play() {
         printWelcome();
         prevLocation = new Stack();
-        
-        //timer.run();
+        timer.calculator();
+
         // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
-        boolean finished = false;
         while (!finished) {
             final Command command = parser.getCommand();
             finished = processCommand(command);
+
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -211,16 +213,20 @@ public class Game
      * Try to go in one direction. If there is an exit, enter the new room,
      * otherwise print an error message.
      */
-    private void goRoom(final Command command) {
-
+    private boolean goRoom(final Command command) {
+        int value = LocalTime.now().compareTo(timer.endTime);
+        while(value == 0 || value > 0){
+            System.out.println("Your time is up, you will have to start all over again.");
+            System.out.println("Type quit to go back to the menu.");
+            return true;
+        }
         if (!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Fill in a cardinal direction i.e. north.");
-            return;
+            return false;
         }
 
         final String direction = command.getSecondWord();
-
         // Try to leave current room.
         final Room nextRoom = currentRoom.getExit(direction);
 
@@ -230,18 +236,19 @@ public class Game
             prevLocation.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
+            return false;
         }
-
+        return false;
     }
 
     public
     void finalRoom(Command command){
-        
+
         String output = "";
         for(String itemName : inventory.keySet()){
             output += inventory.get(itemName).getDescription() + " Weight: " + inventory.get(itemName).getWeight() + "\n";
         }
-       
+
         if(output.contains("Book, Poster, Weird key"))
         {
             System.out.println("KAAS");
@@ -263,16 +270,21 @@ public class Game
         }
     }
 
-    private void goBack(final Command command) {
-        {
-            if (prevLocation.empty()) {
-                System.out.println("You can't go back any further");
-            } else {
-                currentRoom = prevLocation.pop();
-                System.out.println(currentRoom.getLongDescription());
-
-            }
+    private boolean goBack(final Command command) {
+        int value = LocalTime.now().compareTo(timer.endTime);
+        while(value == 0 || value > 0){
+            System.out.println("Your time is up, you will have to start all over again.");
+            System.out.println("Type quit to go back to the menu.");
+            return true;
         }
+        if (prevLocation.empty()) {
+            System.out.println("You can't go back any further");
+        } else {
+            currentRoom = prevLocation.pop();
+            System.out.println(currentRoom.getLongDescription());
+
+        }
+        return false;
     }
 
     private String LookPrepare() {
@@ -280,8 +292,14 @@ public class Game
         return kamer;
     }
 
-    private void look(final Command command) 
+    private boolean look(final Command command) 
     {
+        int value = LocalTime.now().compareTo(timer.endTime);
+        while(value == 0 || value > 0){
+            System.out.println("Your time is up, you will have to start all over again.");
+            System.out.println("Type quit to go back to the menu.");
+            return true;
+        }
         if(LookPrepare().contains(("in the home of president Trump, The White House")))
         {
             System.out.println("                    _ _.-'`-._ _");
@@ -319,16 +337,23 @@ public class Game
         }else{
             System.out.println("That`s weird I can`t see anything, perhaps I should try again later");
         }
+        return false;
     }
 
-    private void getItem(Command command) 
+    private boolean getItem(Command command) 
     {
+
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to pickup..
             System.out.println("Get what?");
-            return;
+            return false;
         }
-
+        int value = LocalTime.now().compareTo(timer.endTime);
+        while(value == 0 || value > 0){
+            System.out.println("Your time is up, you will have to start all over again.");
+            System.out.println("Type quit to go back to the menu.");
+            return true;
+        }
         String itemName = command.getSecondWord();
         Item newItem = currentRoom.getItem(itemName);
 
@@ -349,16 +374,22 @@ public class Game
                 System.out.println(" New inventory weight: " + getTotalWeight());
             }
         }
+        return false;
     }
 
-    private void dropItem(Command command) 
+    private boolean dropItem(Command command) 
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
             System.out.println("Wait a minute drop what?");
-            return;
+            return false;
         }
-
+        int value = LocalTime.now().compareTo(timer.endTime);
+        while(value == 0 || value > 0){
+            System.out.println("Your time is up, you will have to start all over again.");
+            System.out.println("Type quit to go back to the menu.");
+            return true;
+        }
         String itemName = command.getSecondWord();
         Item newItem = inventory.get(itemName);
         if(newItem == null){
@@ -370,15 +401,23 @@ public class Game
             System.out.println("Dropped: " + itemName); 
             System.out.println("New inventory weight: " + getTotalWeight());
         }
+        return false;
     }
 
-    private void printInventory(){
+    private boolean printInventory(){
         String output = "";
-        for(String itemName : inventory.keySet()){
+        int value = LocalTime.now().compareTo(timer.endTime);
+
+        while(value == 0 || value > 0){
+            System.out.println("Your time is up, you will have to start all over again.");
+            System.out.println("Type quit to go back to the menu.");
+            return true;
+        }for(String itemName : inventory.keySet()){
             output += inventory.get(itemName).getName()+ " : " + inventory.get(itemName).getDescription() + "--- Weight: " + inventory.get(itemName).getWeight() + "\n";
         }
         System.out.println("you are carrying:");
         System.out.println(output);
+        return false;
     }
 
     private int getTotalWeight(){
