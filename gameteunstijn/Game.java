@@ -75,10 +75,19 @@ public class Game
         The_Sfinx.setExit("north", Black_Villa);
         The_Sfinx.setExit("west", Statue_Of_Liberty);
         //initialise items
-        White_House.setItem(new Item("key", 5, "Weird key, wonder where it goes"));
-        White_House.setItem(new Item("book", 10, "Book, 50 shades of grey"));
-        White_House.setItem(new Item("poster", 3, "Poster, Obama poster"));
-        Trump_Tower.setItem(new Item("Eric", 65, "Eric, sicke legend ")); 
+        White_House.setItem(new Item("key", 5, "Wonder where it brings me"));
+        White_House.setItem(new Item("book", 10, "50 Shades Of Grey"));
+        White_House.setItem(new Item("poster", 3, "Obama poster, Trump must secretly really like him"));
+
+        Black_Villa.setItem(new Item("picture", 3, "It shows me and my friends after we raided area 51"));
+        Black_Villa.setItem(new Item("car", 1000, "Fiat Multipla"));
+
+        Trump_Tower.setItem(new Item("souvenir", 3, "A small statue of the Trump Tower."));
+
+        Akons_Cellar.setItem(new Item("tape", 5, "Esed for tying garmets, binding seams or carpets etc. "));
+
+        Statue_Of_Liberty.setItem(new Item("rope", 5, "Maybe we can use this to tie something or someone down"));
+
         currentRoom = Black_Villa; // start game at black villa
     }
 
@@ -88,7 +97,7 @@ public class Game
     public void play() {
         printWelcome();
         prevLocation = new Stack();
-               // Enter the main command loop. Here we repeatedly read commands and
+        // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
         boolean finished = false;
@@ -108,7 +117,7 @@ public class Game
         System.out.println("You'll be playing as the president of the fictional country Bambicules. ");
         System.out.println(
             "Your name is Aliaune Damala Bouga Time Puru Nacka Lu Lu Lu Badara Akon Thiam. Or in short, Akon.");
-        System.out.println("Your goal is to extradite president Trump from the United States of America.");
+        System.out.println("Your goal is to extradite (or kidnap) president Trump from the United States of America.");
         System.out.println(
             "You can do this by moving from location to location. This can be done by typing 'go' and a cardinal direction like 'north'. ");
         System.out.println("Good luck and have fun!");
@@ -162,10 +171,6 @@ public class Game
 
             case TAKE:
             getItem(command);
-            break;
-
-            case USE:
-            use(command);
             break;
 
             case DROP:
@@ -263,9 +268,17 @@ public class Game
     {
         if(LookPrepare().contains(("in the home of president Trump, The White House")))
         {
+            System.out.println("                    _ _.-'`-._ _");
+            System.out.println("                   ;.'________'.;");
+            System.out.println("        _________n.[____________].n_________");
+            System.out.println("       |''_''_''_''||==||==||==||''_''_''_'']");
+            System.out.println("       |LI LI LI LI||LI||LI||LI||LI LI LI LI|");
+            System.out.println("       |.. .. .. ..||..||..||..||.. .. .. ..|");
+            System.out.println("       |LI LI LI LI||LI||LI||LI||LI LI LI LI|");
+            System.out.println("    ,,;;,;;;,;;;,;;;,;;;,;;;,;;;,;;,;;;,;;;,;;,,");
+            System.out.println("   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
             System.out.println("Currently I'm at the White House, there are several items I could try to interact with.");
             System.out.println("");
-            //System.out.println(currentRoom.getItemDescription());
         }else if(LookPrepare().contains("in your own home, The Black Villa")){
             System.out.println("I'm home, maybe there are some interesting items I could take with me." );
 
@@ -309,7 +322,16 @@ public class Game
         else{
             inventory.put(itemName, newItem);
             currentRoom.removeItem(itemName);
-            System.out.println("Picked up: " + itemName); 
+            System.out.println("Picked up: " + itemName);   
+            if (getTotalWeight() > 50   ){
+                System.out.println("I can't carry that!");
+                inventory.remove(itemName);
+                currentRoom.setItem(newItem);
+            }
+            else
+            {
+                System.out.println(" New inventory weight: " + getTotalWeight());
+            }
         }
     }
 
@@ -324,47 +346,31 @@ public class Game
         String itemName = command.getSecondWord();
         Item newItem = inventory.get(itemName);
         if(newItem == null){
-            System.out.println("You cant drop something what you dont have");
+            System.out.println("You cant drop something you dont have");
         }
         else{
             inventory.remove(itemName);
             currentRoom.setItem(newItem);
             System.out.println("Dropped: " + itemName); 
+            System.out.println("New inventory weight: " + getTotalWeight());
         }
     }
 
     private void printInventory(){
         String output = "";
         for(String itemName : inventory.keySet()){
-            output += inventory.get(itemName).getDescription() + " Weight: " + inventory.get(itemName).getWeight() + "\n";
+            output += inventory.get(itemName).getName()+ " : " + inventory.get(itemName).getDescription() + "--- Weight: " + inventory.get(itemName).getWeight() + "\n";
         }
         System.out.println("you are carrying:");
         System.out.println(output);
     }
-    // private void take(final Command command) 
-    // {
-    //if(!command.hasSecondWord()) {
-    // if there is no second word, we don't know what to pickup..
-    //  System.out.println("Take requires a second word i.e. key");
-    //  return;
-    //}
-    //String varitem = command.getSecondWord();
-    //if (currentRoom.getItems().contains(varitem)){
 
-    //  System.out.println("Item added to inventory : " + varitem);
-
-    //  inventory.add(varitem);
-    //currentRoom.items.remove(varitem); DEZE WERKT NIET, MOET INDEX ZIJN 
-
-    //  System.out.println("Current inventory: " +inventory);
-    //}
-    //   else 
-    // {
-    //     System.out.println("The item you're looking for, isn't in this room.");
-    // }
-
-    //}
-
-    private void use(final Command command) {
+    private int getTotalWeight(){
+        int output = 0;
+        for(String itemName : inventory.keySet()){
+            output = output + inventory.get(itemName).getWeight();
+        }
+        return output;
     }
+
 }

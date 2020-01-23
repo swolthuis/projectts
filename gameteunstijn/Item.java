@@ -34,5 +34,10 @@ public class Item
     {
         return weight;
     }
+    
+    public String getName()
+    {
+        return name;
+    }
 }
 

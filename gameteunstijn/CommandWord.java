@@ -26,8 +26,6 @@ public enum CommandWord
     
     TAKE("take"),
     
-    USE("use"),
-    
     DROP ("drop"),
     
     INVENTORY("inventory");

@@ -73,7 +73,7 @@ public class Room
             returnString += " " + exit;
         }
         returnString += "\nItems on this location: \n";
-        returnString += getRoomItems() + " ";
+        returnString += getRoomItems() + " \n";
         return returnString;
     }
 
@@ -104,7 +104,7 @@ public class Room
     public String getRoomItems(){
         String output = "";
         for(String itemName : itemsInRoom.keySet()){
-            output += itemsInRoom.get(itemName).name + " " ;
+            output += itemsInRoom.get(itemName).name + " : " +  itemsInRoom.get(itemName).getDescription() +" \n" ;
         }
         return output;
     }
