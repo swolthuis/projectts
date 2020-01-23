@@ -44,7 +44,7 @@ public class Game
      */
     private void createRooms() {
         ArrayList<Item> itemsWH = new ArrayList();
-        Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sfinx, Secret_Room;
+        Room White_House, Black_Villa, Trump_Tower, Akons_Cellar, Statue_Of_Liberty, The_Sphinx, Secret_Room;
 
         // create the rooms
         White_House = new Room("in the home of president Trump, The White House.");
@@ -52,7 +52,7 @@ public class Game
         Trump_Tower = new Room("in one of many properties owned by president Trump, The Trump Tower.");
         Akons_Cellar = new Room("In the cellar of one of your many properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
-        The_Sfinx = new Room("at the Sfinx, a great statue representing communism");
+        The_Sphinx = new Room("at the Sphinx, a great statue representing communism");
         Secret_Room = new Room("Trapped, you have no idea where you are");
         //System.out.println(White_House.getItems()   );
 
@@ -63,7 +63,7 @@ public class Game
 
         Black_Villa.setExit("north", Akons_Cellar);
         Black_Villa.setExit("west", White_House);
-        Black_Villa.setExit("south", The_Sfinx);
+        Black_Villa.setExit("south", The_Sphinx);
 
         Trump_Tower.setExit("south", White_House);
         Trump_Tower.setExit("east", Akons_Cellar);
@@ -72,24 +72,40 @@ public class Game
         Akons_Cellar.setExit("west", Trump_Tower);
 
         Statue_Of_Liberty.setExit("north", White_House);
-        Statue_Of_Liberty.setExit("east", The_Sfinx);
+        Statue_Of_Liberty.setExit("east", The_Sphinx);
 
-        The_Sfinx.setExit("north", Black_Villa);
-        The_Sfinx.setExit("west", Statue_Of_Liberty);
+        The_Sphinx.setExit("north", Black_Villa);
+        The_Sphinx.setExit("west", Statue_Of_Liberty);
 
         //initialise items
-        White_House.setItem(new Item("key", 5, "Wonder where it brings me"));
-        White_House.setItem(new Item("book", 10, "50 Shades Of Grey"));
-        White_House.setItem(new Item("poster", 3, "Obama poster, Trump must secretly really like him"));
+        White_House.setItem(new Item("key", 5, "Wonder where it brings me."));
+        White_House.setItem(new Item("book", 6, "50 Shades Of Grey."));
+        White_House.setItem(new Item("poster", 3, "Obama poster, Trump must secretly really like him."));
+        White_House.setItem(new Item("twister", 6, "A game, usually played by kids."));
+        White_House.setItem(new Item("wig", 4, "Huh, sure looks a lot like Trump's hair."));
 
         Black_Villa.setItem(new Item("picture", 3, "It shows me and my friends after we raided area 51"));
         Black_Villa.setItem(new Item("car", 1000, "Fiat Multipla"));
+        Black_Villa.setItem(new Item("television", 70, "I bought this new televion a few months ago, it's really big."));
+        Black_Villa.setItem(new Item("painting", 7, "A giant painting displaying the Swedish pop group Abba."));
+        Black_Villa.setItem(new Item("mixtape", 5, "A compilation of music, typically from multiple sources, recorded onto a medium."));
 
-        Trump_Tower.setItem(new Item("souvenir", 3, "A small statue of the Trump Tower."));
+        Trump_Tower.setItem(new Item("souvenir", 3, "A small keychain of the Trump Tower."));
+        Trump_Tower.setItem(new Item("statue", 35, "A statue displaying Trump."));
 
-        Akons_Cellar.setItem(new Item("tape", 5, "Esed for tying garmets, binding seams or carpets etc. "));
+        Akons_Cellar.setItem(new Item("tape", 5, "Used for tying garmets, binding seams or carpets etc. "));
+        Akons_Cellar.setItem(new Item("glasses", 3, "Used for reading books."));
 
-        Statue_Of_Liberty.setItem(new Item("rope", 5, "Maybe we can use this to tie something or someone down"));
+        Statue_Of_Liberty.setItem(new Item("statue of liberty", 10000, "The famous Statue of Liberty."));
+        Statue_Of_Liberty.setItem(new Item("rope", 5, "Maybe we can use this to tie something or someone down."));
+        Statue_Of_Liberty.setItem(new Item("hotdog", 5, "Probably fell out of a bun, from the hotdogstand nearby."));
+
+        The_Sphinx.setItem(new Item("block",5 ,"Blocks are the basic units of structure in Minecraft that can be directly placed in the game world."));
+        The_Sphinx.setItem(new Item("pickaxe",8 , "Pickaxes, or picks, are probably the tool that people use the most in Minecraft."));
+        The_Sphinx.setItem(new Item("sandstone",5 , "Sandstone is pretty easy to find in Minecraft. Find a desert and start digging"));
+        The_Sphinx.setItem(new Item("sand",3 , "Sand is a common physic-obeying block that can be found in desert biomes. "));
+        The_Sphinx.setItem(new Item("diamond", 10, "Diamonds are a rare mineral obtained from diamond ore or loot chests. "));
+        The_Sphinx.setItem(new Item("hoe", 5, "Hoes are tools used to till dirt and grass blocks into farmland blocks. "));
 
         currentRoom = Black_Villa; // start game at black villa
     }
@@ -104,7 +120,7 @@ public class Game
     public void play() {
         printWelcome();
         prevLocation = new Stack();
-        
+
         //timer.run();
         // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
@@ -134,6 +150,7 @@ public class Game
         System.out.println("For more help, type 'help'.");
         System.out.println();
         System.out.println("You'll start at your own home.");
+        System.out.println("Your inventory can contain a max weight of 80");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
@@ -234,20 +251,6 @@ public class Game
 
     }
 
-    public
-    void finalRoom(Command command){
-        
-        String output = "";
-        for(String itemName : inventory.keySet()){
-            output += inventory.get(itemName).getDescription() + " Weight: " + inventory.get(itemName).getWeight() + "\n";
-        }
-       
-        if(output.contains("Book, Poster, Weird key"))
-        {
-            System.out.println("KAAS");
-        }
-    }
-
     /**
      * "Quit" was entered. Check the rest of the command to see whether we really
      * quit the game.
@@ -293,27 +296,145 @@ public class Game
             System.out.println("       |LI LI LI LI||LI||LI||LI||LI LI LI LI|");
             System.out.println("    ,,;;,;;;,;;;,;;;,;;;,;;;,;;;,;;,;;;,;;;,;;,,");
             System.out.println("   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
-            System.out.println("Currently I'm at the White House, there are several items I could try to interact with.");
+            System.out.println("Currently I'm at the White House, home of president Trump.");
+            System.out.println("There are several items I could take with me on my adventure");
+            System.out.println("Looks like Trump isn't here currently");
             System.out.println("");
         }else if(LookPrepare().contains("in your own home, The Black Villa")){
-            System.out.println("I'm home, maybe there are some interesting items I could take with me." );
+            System.out.println("                  / \\ ");
+            System.out.println("                 //_\\\\");
+            System.out.println("                //(_)\\\\");
+            System.out.println("                 |/^\\|");
+            System.out.println("       ,%%%%     // \\\\    ,@@@@@@@,");
+            System.out.println("     ,%%%%/%%%  //   \\\\ ,@@@\\@@@@/@@,");
+            System.out.println(" @@@%%%\\%%//%%%// === \\\\ @@\\@@@/@@@@@");
+            System.out.println("@@@@%%%%\\%%%%%// =-=-= \\\\@@@@\\@@@@@@;%#####,");
+            System.out.println("@@@@%%%\\%%/%%//   ===   \\\\@@@@@@/@@@%%%######,");
+            System.out.println("@@@@@%%%%/%%//|         |\\\\@\\\\//@@%%%%%%#/####");
+            System.out.println("'@@@@@%%\\\\/%~ |         | ~ @|| %\\\\//%%%#####;");
+            System.out.println("  @@\\\\//@||   |  __ __  |    || %%||%%'######");
+            System.out.println("   '@||  ||   | |  |  | |    ||   ||##\\//####");
+            System.out.println("     ||  ||   | | -|- | |    ||   ||'#||###'");
+            System.out.println("     ||  ||   |_|__|__|_|    ||   ||  ||");
+            System.out.println("     ||  ||_/`  =======  `\\__||_._||  ||");
+            System.out.println("   __||_/`      =======            `\\_||___");
+            System.out.println("This is my home, a nice place out in the woods.");
+            System.out.println("Perhaps there are some interesting items I could take with me." );
+            System.out.println("");
 
         }else if(LookPrepare().contains("in one of many properties owned by president Trump, The Trump Tower")){
-            System.out.println("I'm at the Trump Tower, there are a few interesting things I see.");
+            System.out.println("                           ___,");
+            System.out.println("                    o___.-' /");
+            System.out.println("                    |      _\\_");
+            System.out.println("                    |___.-'   `");
+            System.out.println("                    |");
+            System.out.println("                    |");
+            System.out.println("            _   _   j   _   _");
+            System.out.println("           [_]_[_]_[_]_[_]_[_]");
+            System.out.println("           [__j__j__j__j__j__]");
+            System.out.println("             [_j__j__j__j__]");
+            System.out.println("             [__j__j__j__j_]");
+            System.out.println("             [_j__j/V\\_j__j]");
+            System.out.println("             [__j_// \\\\__j_]");
+            System.out.println("             [_j__|   |_j__]");
+            System.out.println("             [__j_|___|__j_]");
+            System.out.println("             [_j__j__j__j__]");
+            System.out.println("             [__j__j__j__j_]");
+            System.out.println("  _   _   _  [_j__j__j__j__]  _   _   _   _");
+            System.out.println("_[_]_[_]_[_]_[__j__j__j__j_]_[_]_[_]_[_]_[_]_");
+            System.out.println("  _j__j__j__j[_j__j__j__j__]j__j__j__j__j_");
+            System.out.println("     j  j  j [  j  j  j  j ] j  j  j  j    "); 
+            System.out.println("I'm at the Trump Tower, there is one very interesting thing here.");
             System.out.println("There is a big door that says DONALD ONLY, I wonder where that would bring me.");
             System.out.println("Unfortunately it's locked, for now...");
-
+            System.out.println("Perhaps if I came back with the right set of items, and tried to look again, I could try to open the door.");
+            if(inventory.containsValue("key"))
+            {
+                System.out.println("Deze wel");
+            }
+            else
+            {
+                System.out.println("nee");
+            }
+            //if (inventory.(itemEen)= true){}// Hier moet de if statement
         }else if(LookPrepare().contains("In the cellar of one of your many properties")){
-            System.out.println("A cellar, that would be a great place for Trump.");
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,");
+            System.out.println("8                           8\"b,    \"Ya");
+            System.out.println("8                           8  \"b,    \"Ya");
+            System.out.println("8                    aaaaaaa8,   \"b,    \"Ya");
+            System.out.println("8                    8\"b,    \"Ya   \"8\"\"\"\"\"\"8");
+            System.out.println("8                    8  \"b,    \"Ya  8      8");
+            System.out.println("8             aaaaaaa8,   \"b,    \"Ya8      8");
+            System.out.println("8   A         8\"b,    \"Ya   \"8\"\"\"\"\"\"\"      8");
+            System.out.println("8             8  \"b,    \"Ya  8             8");
+            System.out.println("8      aaaaaa88,   \"b,    \"Ya8         B   8");
+            System.out.println("8      8\"b,    \"Ya   \"8\"\"\"\"\"\"\"             8");
+            System.out.println("8      8  \"b,    \"Ya  8                    8");
+            System.out.println("8aaaaaa8,   \"b,    \"Ya8                    8");
+            System.out.println("8\"b,    \"Ya   \"8\"\"\"\"\"\"\"                    8");
+            System.out.println("8  \"b,    \"Ya  8                           8");
+            System.out.println("8,   \"b,    \"Ya8                           8");
+            System.out.println("\"Ya   \"8\"\"\"\"\"\"\"                           8");
+            System.out.println("\"Ya  8                                  8");
+            System.out.println("\"Ya8                                  8");
+            System.out.println("\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"");
+            System.out.println("A cellar, the only way to reach this place is by going down some stairs.");
             System.out.println("For now, this isn't the most interesting of places.");
+            System.out.println("Maybe later we can stash something (or someone here)");
+            System.out.println("");
 
         }else if(LookPrepare().contains("at the Statue of Liberty, a great statue representing freedom")){
+            System.out.println(" ( ");
+            System.out.println("(_)");
+            System.out.println("###");
+            System.out.println(" #");
+            System.out.println("( c     .\\|/.");
+            System.out.println(" \\/\\    wWWWw");
+            System.out.println(" |  \\  (/. .\\)");
+            System.out.println(" |   \\  \\ = /");
+            System.out.println(" \\    \\__) (___");
+            System.out.println("  `\\    \\\\ //  `\\");
+            System.out.println("    `\\   \\^/  _  \\");
+            System.out.println("      \\   ` //^\\  \\");
+            System.out.println("       ;    \\\\  |  |");
+            System.out.println("       |    .-'|-' /");
+            System.out.println("       |    '--\\_.'");
+            System.out.println("       |    .:|");
+            System.out.println("       |    .:|");
+            System.out.println("       ||    ||");
+            System.out.println("       | |;.::|");
+            System.out.println("       |,  .::|");
+            System.out.println("       | ,| .;|");
+            System.out.println("     __|__,_.:|__");
+            System.out.println("    [            ]");
+            System.out.println("    |            |");
+            System.out.println("   _|            |_");
+            System.out.println("  /=--------------=\\");
             System.out.println("There is a big statue in front of me, personally, I don't see why this is such a big deal.");
             System.out.println("They should see The Great Sfinx build for me.");
+            System.out.println("");
 
-        }else if(LookPrepare().contains("at the Sfinx, a great statue representing communism")){
+        }else if(LookPrepare().contains("at the Sphinx, a great statue representing communism")){
+            System.out.println("               ___ ");
+            System.out.println("             .\"///\".");
+            System.out.println("            /|<> <>!\\");
+            System.out.println("           /-|  ^  !-\\");
+            System.out.println("          /-- \\_=_/ --\\");
+            System.out.println("          )---| W |---(");
+            System.out.println("         /-\\--| W |--/-\\");
+            System.out.println("        (_-_--|_-_|--___)");
+            System.out.println("       (-___  -_-- _-- -_)");
+            System.out.println("       )-_ _--_ _ ___--__|");
+            System.out.println("       (___ --__  __ __--(");
+            System.out.println("      /-_  / __ -_ -__  \\_\\");
+            System.out.println("     _>/  -- /|___| _ \\ -_ )");
+            System.out.println("    /--  _ - _/ _ \\>\\ -  -- \\");
+            System.out.println("   ( / / /   > |~l \\   \\ \\ \\_)");
+            System.out.println("   | |-' | |/  \"\"\"  \\| |   |_|");
+            System.out.println("   L_|_|_|_/         L_L_|_l_)");
             System.out.println("Now this, this is a big, amazing, fancy, great, cool, fabulous, titanic, remarkable"); 
             System.out.println("superior, noble, outstanding, glorious, prominent, renowned statue.");
+            System.out.println("");
             System.out.println("I wonder if there are more interesting things here");
 
         }else{
@@ -333,20 +454,21 @@ public class Game
         Item newItem = currentRoom.getItem(itemName);
 
         if(newItem == null){
-            System.out.println("There is no item in this room");
+            System.out.println(itemName +" is not here.");
         }
         else{
             inventory.put(itemName, newItem);
             currentRoom.removeItem(itemName);
             System.out.println("Picked up: " + itemName);   
-            if (getTotalWeight() > 50   ){
+            if (getTotalWeight() > 80   ){
                 System.out.println("I can't carry that!");
                 inventory.remove(itemName);
                 currentRoom.setItem(newItem);
+                System.out.println("Inventory weight: " + getTotalWeight()); 
             }
             else
             {
-                System.out.println(" New inventory weight: " + getTotalWeight());
+                System.out.println("New inventory weight: " + getTotalWeight() + "/80");
             }
         }
     }
@@ -362,13 +484,14 @@ public class Game
         String itemName = command.getSecondWord();
         Item newItem = inventory.get(itemName);
         if(newItem == null){
-            System.out.println("You cant drop something you dont have");
+            System.out.println("I can't do that.");
         }
         else{
             inventory.remove(itemName);
             currentRoom.setItem(newItem);
             System.out.println("Dropped: " + itemName); 
-            System.out.println("New inventory weight: " + getTotalWeight());
+            System.out.println("New inventory weight: " + getTotalWeight() + "/80");
+
         }
     }
 
@@ -379,6 +502,7 @@ public class Game
         }
         System.out.println("you are carrying:");
         System.out.println(output);
+        System.out.println("Total: " + getTotalWeight() + "/80");
     }
 
     private int getTotalWeight(){
