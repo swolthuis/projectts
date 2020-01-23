@@ -25,9 +25,7 @@ public enum CommandWord
     LOOK("look"),
 
     TAKE("take"),
-
-    USE("use"),
-
+    
     DROP ("drop"),
 
     TIME("time"),
