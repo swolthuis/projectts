@@ -111,18 +111,6 @@ public class Menu {
         return response;
     }
 
-    private void makeADeposit() {
-        System.out.print("KEVER");
-    }
-
-    private void makeAWithdrawal() {
-        System.out.print("LOPER");
-    }
-
-    private void listBalances() {
-        System.out.print("DIKKE BOKTOR");
-    }
-
     private void displayHeader(String message){
         System.out.println();
         int width = message.length() + 6;
