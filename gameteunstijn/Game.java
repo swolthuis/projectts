@@ -23,18 +23,20 @@ public class Game
     private String kamer;
     private Stack<Room> prevLocation;
     private HashMap <String,Item> inventory = new HashMap<String, Item>();
-
+    private Timer timer;
+    private Menu menu;
     /**
      * Create the game and initialise its internal map.
      */
     public static void main(final String[] args) {
-        new Game().play();
+        new Menu().runMenu();
     }
 
     public Game() {
         createRooms();
         parser = new Parser();
-
+        timer = new Timer();
+        menu = new Menu();
     }
 
     /**
@@ -74,6 +76,7 @@ public class Game
 
         The_Sfinx.setExit("north", Black_Villa);
         The_Sfinx.setExit("west", Statue_Of_Liberty);
+
         //initialise items
         White_House.setItem(new Item("key", 5, "Weird key, wonder where it goes"));
         White_House.setItem(new Item("book", 10, "Book, 50 shades of grey"));
@@ -85,10 +88,16 @@ public class Game
     /**
      * Main play routine. Loops until end of play.
      */
+    public void menu(){
+        menu.runMenu();
+    }
+
     public void play() {
         printWelcome();
         prevLocation = new Stack();
-               // Enter the main command loop. Here we repeatedly read commands and
+        
+        //timer.run();
+        // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
         boolean finished = false;
@@ -156,10 +165,6 @@ public class Game
             look(command);
             break;
 
-            case ABOUT:
-            about(command);
-            break;
-
             case TAKE:
             getItem(command);
             break;
@@ -174,6 +179,10 @@ public class Game
 
             case INVENTORY:
             printInventory();
+            break;
+
+            case TIME:
+            timer.getTime();
             break;
 
         }
@@ -220,6 +229,20 @@ public class Game
 
     }
 
+    public
+    void finalRoom(Command command){
+        
+        String output = "";
+        for(String itemName : inventory.keySet()){
+            output += inventory.get(itemName).getDescription() + " Weight: " + inventory.get(itemName).getWeight() + "\n";
+        }
+       
+        if(output.contains("Book, Poster, Weird key"))
+        {
+            System.out.println("KAAS");
+        }
+    }
+
     /**
      * "Quit" was entered. Check the rest of the command to see whether we really
      * quit the game.
@@ -247,49 +270,9 @@ public class Game
         }
     }
 
-    private void about(final Command command) {
-        System.out.println("About: Trumpnation) ");
-        System.out.println("Authors: Stijn Wolthuis & Teun de Jong ");
-        System.out.println("ITV1H");
-        System.out.println("©2020");
-    }
-
     private String LookPrepare() {
         kamer = currentRoom.getLongDescription();
         return kamer;
-    }
-
-    private void look(final Command command) 
-    {
-        if(LookPrepare().contains(("in the home of president Trump, The White House")))
-        {
-            System.out.println("Currently I'm at the White House, there are several items I could try to interact with.");
-            System.out.println("");
-            //System.out.println(currentRoom.getItemDescription());
-        }else if(LookPrepare().contains("in your own home, The Black Villa")){
-            System.out.println("I'm home, maybe there are some interesting items I could take with me." );
-
-        }else if(LookPrepare().contains("in one of many properties owned by president Trump, The Trump Tower")){
-            System.out.println("I'm at the Trump Tower, there are a few interesting things I see.");
-            System.out.println("There is a big door that says DONALD ONLY, I wonder where that would bring me.");
-            System.out.println("Unfortunately it's locked, for now...");
-
-        }else if(LookPrepare().contains("In the cellar of one of your many properties")){
-            System.out.println("A cellar, that would be a great place for Trump.");
-            System.out.println("For now, this isn't the most interesting of places.");
-
-        }else if(LookPrepare().contains("at the Statue of Liberty, a great statue representing freedom")){
-            System.out.println("There is a big statue in front of me, personally, I don't see why this is such a big deal.");
-            System.out.println("They should see The Great Sfinx build for me.");
-
-        }else if(LookPrepare().contains("at the Sfinx, a great statue representing communism")){
-            System.out.println("Now this, this is a big, amazing, fancy, great, cool, fabulous, titanic, remarkable"); 
-            System.out.println("superior, noble, outstanding, glorious, prominent, renowned statue.");
-            System.out.println("I wonder if there are more interesting things here");
-
-        }else{
-            System.out.println("That`s weird I can`t see anything, perhaps I should try again later");
-        }
     }
 
     private void getItem(Command command) 
@@ -340,6 +323,39 @@ public class Game
         }
         System.out.println("you are carrying:");
         System.out.println(output);
+    }
+
+    private void look(final Command command) 
+    {
+        if(LookPrepare().contains(("in the home of president Trump, The White House")))
+        {
+            System.out.println("Currently I'm at the White House, there are several items I could try to interact with.");
+            System.out.println("");
+            //System.out.println(currentRoom.getItemDescription());
+        }else if(LookPrepare().contains("in your own home, The Black Villa")){
+            System.out.println("I'm home, maybe there are some interesting items I could take with me." );
+
+        }else if(LookPrepare().contains("in one of many properties owned by president Trump, The Trump Tower")){
+            System.out.println("I'm at the Trump Tower, there are a few interesting things I see.");
+            System.out.println("There is a big door that says DONALD ONLY, I wonder where that would bring me.");
+            System.out.println("Unfortunately it's locked, for now...");
+
+        }else if(LookPrepare().contains("In the cellar of one of your many properties")){
+            System.out.println("A cellar, that would be a great place for Trump.");
+            System.out.println("For now, this isn't the most interesting of places.");
+
+        }else if(LookPrepare().contains("at the Statue of Liberty, a great statue representing freedom")){
+            System.out.println("There is a big statue in front of me, personally, I don't see why this is such a big deal.");
+            System.out.println("They should see The Great Sfinx build for me.");
+
+        }else if(LookPrepare().contains("at the Sfinx, a great statue representing communism")){
+            System.out.println("Now this, this is a big, amazing, fancy, great, cool, fabulous, titanic, remarkable"); 
+            System.out.println("superior, noble, outstanding, glorious, prominent, renowned statue.");
+            System.out.println("I wonder if there are more interesting things here");
+
+        }else{
+            System.out.println("That`s weird I can`t see anything, perhaps I should try again later");
+        }
     }
     // private void take(final Command command) 
     // {

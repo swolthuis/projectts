@@ -17,19 +17,21 @@ public enum CommandWord
     HELP("help"), 
 
     UNKNOWN("?"), 
-    
+
     ABOUT("about"),
 
     BACK("back"),
-    
+
     LOOK("look"),
-    
+
     TAKE("take"),
-    
+
     USE("use"),
-    
+
     DROP ("drop"),
-    
+
+    TIME("time"),
+
     INVENTORY("inventory");
 
     // The command string.
