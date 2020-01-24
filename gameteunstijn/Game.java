@@ -1,4 +1,3 @@
-
 import java.time.LocalTime;
 import java.util.*;
 /**
@@ -58,8 +57,7 @@ public class Game
         Akons_Cellar = new Room("In the cellar of one of your many properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
         The_Sphinx = new Room("at the Sphinx, a great statue representing communism");
-        Secret_Room = new Room("Trapped, you have no idea where you are");
-        //System.out.println(White_House.getItems()   );
+        Secret_Room = new Room("Secret Room");
 
         // initialise room exits
         White_House.setExit("north", Trump_Tower);
@@ -72,6 +70,7 @@ public class Game
 
         Trump_Tower.setExit("south", White_House);
         Trump_Tower.setExit("east", Akons_Cellar);
+        Trump_Tower.setExit("north", Secret_Room);
 
         Akons_Cellar.setExit("south", Black_Villa);
         Akons_Cellar.setExit("west", Trump_Tower);
@@ -101,7 +100,7 @@ public class Game
         Akons_Cellar.setItem(new Item("tape", 5, "Used for tying garmets, binding seams or carpets etc. "));
         Akons_Cellar.setItem(new Item("glasses", 3, "Used for reading books."));
 
-        Statue_Of_Liberty.setItem(new Item("statue of liberty", 10000, "The famous Statue of Liberty."));
+        Statue_Of_Liberty.setItem(new Item("statue_of_liberty", 10000, "The famous Statue of Liberty."));
         Statue_Of_Liberty.setItem(new Item("rope", 5, "Maybe we can use this to tie something or someone down."));
         Statue_Of_Liberty.setItem(new Item("hotdog", 5, "Probably fell out of a bun, from the hotdogstand nearby."));
 
@@ -251,27 +250,36 @@ public class Game
 
         if (nextRoom == null) {
             System.out.println("There is nothing there, try another cardinal direction.");
-        } else {
+        } 
+        else if (nextRoom.getLongDescription().contains("Secret Room")){
+            String output = "";
+            for(String itemName : inventory.keySet()){
+                output += inventory.get(itemName).getName();
+            }
+
+            if(output.contains("key") && (output.contains("rope")&& (output.contains("tape"))))
+            {
+                System.out.println("yay, you did it.");
+                prevLocation.push(currentRoom);
+                currentRoom = nextRoom;
+                System.out.println(currentRoom.getLongDescription());
+                return false;
+            }
+            else {
+                System.out.println("You need the correct items to open this door");
+            }
+            //System.out.println("hier zit de secret shit");
+        }
+
+        else 
+        {
             prevLocation.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
             return false;
         }
+
         return false;
-    }
-
-    public
-    void finalRoom(Command command){
-
-        String output = "";
-        for(String itemName : inventory.keySet()){
-            output += inventory.get(itemName).getDescription() + " Weight: " + inventory.get(itemName).getWeight() + "\n";
-        }
-
-        if(output.contains("Book, Poster, Weird key"))
-        {
-            System.out.println("KAAS");
-        }
     }
 
     /**
@@ -382,15 +390,24 @@ public class Game
             System.out.println("There is a big door that says DONALD ONLY, I wonder where that would bring me.");
             System.out.println("Unfortunately it's locked, for now...");
             System.out.println("Perhaps if I came back with the right set of items, and tried to look again, I could try to open the door.");
-            if(inventory.containsValue("key"))
-            {
-                System.out.println("Deze wel");
+
+            String output = "";
+            for(String itemName : inventory.keySet()){
+                output += inventory.get(itemName).getName();
             }
-            else
+
+            if(output.contains("key") && (output.contains("rope")&& (output.contains("tape"))))
             {
-                System.out.println("nee");
+                System.out.println("I could try opening the door now!");
+                //final Room nextRoom = Secret_Room;
             }
-            //if (inventory.(itemEen)= true){}// Hier moet de if statement
+            else {
+                System.out.println("We don't know where this door leads.");
+                System.out.println("I should take some items with me to make sure i'll be okay.");
+                System.out.println("A key to open the door.");
+                System.out.println("A rope in case I have to escape.");
+                System.out.println("Some tape to help me fix things.");
+            }
         }else if(LookPrepare().contains("In the cellar of one of your many properties")){
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,");
             System.out.println("8                           8\"b,    \"Ya");
