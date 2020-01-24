@@ -154,7 +154,7 @@ public class Game
         System.out.println("For more help, type 'help'.");
         System.out.println();
         System.out.println("You'll start at your own home.");
-        System.out.println("Your inventory can contain a max weight of 80");
+        System.out.println("Your inventory can contain a max weight of 80kg");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
@@ -509,7 +509,7 @@ public class Game
             }
             else
             {
-                System.out.println("New inventory weight: " + getTotalWeight() + "/80");
+                System.out.println("New inventory weight: " + getTotalWeight() + "/80kg");
             }
         }
         return false;
@@ -539,7 +539,7 @@ public class Game
             inventory.remove(itemName);
             currentRoom.setItem(newItem);
             System.out.println("Dropped: " + itemName); 
-            System.out.println("New inventory weight: " + getTotalWeight() + "/80");
+            System.out.println("New inventory weight: " + getTotalWeight() + "/80kg");
 
         }
         return false;
@@ -555,11 +555,11 @@ public class Game
             return true;
         }
         for(String itemName : inventory.keySet()){
-            output += inventory.get(itemName).getName()+ " : " + inventory.get(itemName).getDescription() + "--- Weight: " + inventory.get(itemName).getWeight() + "\n";
+            output += inventory.get(itemName).getName()+ " : " + inventory.get(itemName).getDescription() + "--- Weight: " + inventory.get(itemName).getWeight() + "kg\n";
         }
         System.out.println("you are carrying:");
         System.out.println(output);
-        System.out.println("Total: " + getTotalWeight() + "/80");
+        System.out.println("Total: " + getTotalWeight() + "/80kg");
         return false;
     }
 
