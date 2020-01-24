@@ -4,7 +4,16 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * This class is part of the "World of Zuul" application. 
+ * "World of Zuul" is a very simple, text based adventure game.
+ * 
+ * This class holds the menu of the game
+ * It is used the menu to give the player options what to do
+ *
+ * @author  Stijn Wolthuis en Teun de Jong
+ * @version 1
+ */
 public class Menu {
 
     //Instance Variables
@@ -18,6 +27,7 @@ public class Menu {
         menu.runMenu();
 
     }
+    
     public void runMenu() {
         printHeader();
         while (!exit) {

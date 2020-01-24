@@ -45,6 +45,7 @@ public class Game
 
     /**
      * Create all the rooms and link their exits together.
+     * Also sets items in the rooms.
      */
     private void createRooms() {
         ArrayList<Item> itemsWH = new ArrayList();
@@ -57,7 +58,7 @@ public class Game
         Akons_Cellar = new Room("In the cellar of one of your many properties.");
         Statue_Of_Liberty = new Room("at the Statue of Liberty, a great statue representing freedom");
         The_Sphinx = new Room("at the Sphinx, a great statue representing communism");
-        Secret_Room = new Room("Secret Room");
+        Secret_Room = new Room("in Trumps secret room");
 
         // initialise room exits
         White_House.setExit("north", Trump_Tower);
@@ -115,12 +116,15 @@ public class Game
     }
 
     /**
-     * Main play routine. Loops until end of play.
+     * Main menu.
      */
     public void menu(){
         menu.runMenu();
     }
 
+    /**
+     * Main play routine. Loops until end of play.
+     */
     public void play() {
         printWelcome();
         prevLocation = new Stack();
@@ -251,7 +255,7 @@ public class Game
         if (nextRoom == null) {
             System.out.println("There is nothing there, try another cardinal direction.");
         } 
-        else if (nextRoom.getLongDescription().contains("Secret Room")){
+        else if (nextRoom.getLongDescription().contains("secret room")){
             String output = "";
             for(String itemName : inventory.keySet()){
                 output += inventory.get(itemName).getName();
@@ -259,14 +263,18 @@ public class Game
 
             if(output.contains("key") && (output.contains("rope")&& (output.contains("tape"))))
             {
-                System.out.println("yay, you did it.");
+                System.out.println("I went through the hidden door.");
                 prevLocation.push(currentRoom);
                 currentRoom = nextRoom;
                 System.out.println(currentRoom.getLongDescription());
+                System.out.println("You hear the door close behind you.");
+                System.out.println("Looks like I can't go back now.");
+
                 return false;
             }
             else {
-                System.out.println("You need the correct items to open this door");
+                System.out.println("I see a strange door but I can't open it");
+                System.out.println("I will need the correct items to open this door");
             }
             //System.out.println("hier zit de secret shit");
         }
@@ -297,6 +305,11 @@ public class Game
         }
     }
 
+    /**
+     * Back command, will put the player to the previous room.
+     * If there isn't a previous room it will say so.
+     */
+
     private boolean goBack(final Command command) {
         int value = LocalTime.now().compareTo(timer.endTime);
         while(value == 0 || value > 0){
@@ -304,21 +317,34 @@ public class Game
             System.out.println("Type quit to go back to the menu.");
             return true;
         }
-        if (prevLocation.empty()) {
+        if(LookPrepare().contains(("secret room."))){
+            System.out.println("I can't go back anymore");
+            return false;
+        }
+        else if(prevLocation.empty()) {
             System.out.println("You can't go back any further");
-        } else {
+            return false;
+        } 
+        else {
             currentRoom = prevLocation.pop();
             System.out.println(currentRoom.getLongDescription());
-
+            
         }
         return false;
     }
 
+    /**
+     * makes a String of the current room and description.
+     */
     private String LookPrepare() {
         kamer = currentRoom.getLongDescription();
         return kamer;
     }
 
+    /**
+     * The look command will check in which room the player is.
+     * Then it will print what the player sees and give some extra information
+     */
     private boolean look(final Command command) 
     {
         int value = LocalTime.now().compareTo(timer.endTime);
@@ -487,27 +513,45 @@ public class Game
             System.out.println("superior, noble, outstanding, glorious, prominent, renowned statue.");
             System.out.println("");
             System.out.println("I wonder if there are more interesting things here");
-
+        }else if(LookPrepare().contains(("secret room.")))
+        {   
+            //code van foto van trump 
+            System.out.println("");
+            System.out.println("I see president Trump in front of me");
+            System.out.println("I quickly use my rope on him and tie him up");
+            System.out.println("I use my tape to tape his mouth shut");
+            System.out.println("I got him I got president Trump, now let's get out of here");
+            System.out.println("");
+            System.out.println("Congratulations, you have captured president Trump.");
+            System.out.println("type quit to go back to the main menu");
+            return true;
         }else{
             System.out.println("That`s weird I can`t see anything, perhaps I should try again later");
         }
         return false;
     }
+ 
 
+    /**
+     * With the get command the player is able to pick-up items that are on the ground.
+     * It checks if the item is in the room or not.
+     * Then if the item is in the room the player puts it in it's inventory.
+     */
     private boolean getItem(Command command) 
     {
-
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know what to pickup..
-            System.out.println("Get what?");
-            return false;
-        }
         int value = LocalTime.now().compareTo(timer.endTime);
         while(value == 0 || value > 0){
             System.out.println("Your time is up, you will have to start all over again.");
             System.out.println("Type quit to go back to the menu.");
             return true;
         }
+
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what to pickup..
+            System.out.println("Take what?");
+            return false;
+        }
+
         String itemName = command.getSecondWord();
         Item newItem = currentRoom.getItem(itemName);
 
@@ -532,6 +576,10 @@ public class Game
         return false;
     }
 
+    /**
+     * The drop item command is for the player to drop an item that is in it's inventory.
+     * The code will check if the named item is in the inventory, if so it will drop it.
+     */
     private boolean dropItem(Command command) 
     {
         int value = LocalTime.now().compareTo(timer.endTime);
@@ -540,13 +588,18 @@ public class Game
             System.out.println("Type quit to go back to the menu.");
             return true;
         }
-
+        
+        if(LookPrepare().contains(("secret room."))){
+            System.out.println("I can't leave any traces behind here.");
+            return false;
+        }
+        
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
             System.out.println("Wait a minute drop what?");
             return false;
         }
-
+        
         String itemName = command.getSecondWord();
         Item newItem = inventory.get(itemName);
         if(newItem == null){
@@ -562,6 +615,10 @@ public class Game
         return false;
     }
 
+    /** With the inventory command the player can look what item(s) it has picked up.
+     * It also tells the total amount of weight it is carrying and what it can maxium hold.
+     *
+     */
     private boolean printInventory(){
         String output = "";
         int value = LocalTime.now().compareTo(timer.endTime);
@@ -580,6 +637,9 @@ public class Game
         return false;
     }
 
+    /**
+     * The totalWeight method will calculate how much kg the player is carrying and returns it as an integer.
+     */
     private int getTotalWeight(){
         int output = 0;
         for(String itemName : inventory.keySet()){

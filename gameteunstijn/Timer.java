@@ -4,13 +4,27 @@ import java.util.Date;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import static java.time.temporal.ChronoUnit.MINUTES;
-
+/**
+ * This class is part of the "World of Zuul" application. 
+ * "World of Zuul" is a very simple, text based adventure game.
+ * 
+ * This class holds the timer of the game
+ * It is used to time the time of the player
+ * And for the player to get the time
+ *
+ * @author  Stijn Wolthuis en Teun de Jong
+ * @version 1
+ */
 public class Timer {
     private String timeStart;
     private String timeNow;
     public LocalTime endTime;
     public int value; 
-
+    /**
+     * This method is used to set the start time of the game 
+     * Give the player the amount of time it has to complete the game
+     * It converts the time so it is readable for the player
+     */
     public void calculator(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime startTime = LocalTime.now();
@@ -24,6 +38,11 @@ public class Timer {
 
     }
 
+    /**
+     * This method is used to tell the time 
+     * It also calculates how much minutes the player has left
+     * It converts the time so it is readable for the player
+     */
     public boolean  getTime(){
         int value = LocalTime.now().compareTo(endTime);
         while(value == 0 || value > 0){

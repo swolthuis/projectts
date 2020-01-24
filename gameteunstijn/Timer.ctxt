@@ -1,7 +1,10 @@
 #BlueJ class context
 comment0.target=Timer
+comment0.text=\r\n\ This\ class\ is\ part\ of\ the\ "World\ of\ Zuul"\ application.\ \r\n\ "World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\r\n\ \r\n\ This\ class\ holds\ the\ timer\ of\ the\ game\r\n\ It\ is\ used\ to\ time\ the\ time\ of\ the\ player\r\n\ And\ for\ the\ player\ to\ get\ the\ time\r\n\r\n\ @author\ \ Stijn\ Wolthuis\ en\ Teun\ de\ Jong\r\n\ @version\ 1\r\n
 comment1.params=
 comment1.target=void\ calculator()
+comment1.text=\r\n\ This\ method\ is\ used\ to\ set\ the\ start\ time\ of\ the\ game\ \r\n\ Give\ the\ player\ the\ amount\ of\ time\ it\ has\ to\ complete\ the\ game\r\n\ It\ converts\ the\ time\ so\ it\ is\ readable\ for\ the\ player\r\n
 comment2.params=
 comment2.target=boolean\ getTime()
+comment2.text=\r\n\ This\ method\ is\ used\ to\ tell\ the\ time\ \r\n\ It\ also\ calculates\ how\ much\ minutes\ the\ player\ has\ left\r\n\ It\ converts\ the\ time\ so\ it\ is\ readable\ for\ the\ player\r\n
 numComments=3
