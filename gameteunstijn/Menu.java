@@ -9,17 +9,15 @@ public class Menu {
 
     //Instance Variables
     private Game game;
-    
+
     boolean exit;
 
     public static void main(String[] args) {
         Menu menu = new Menu();
         Game game = new Game();
         menu.runMenu();
-        
-        
-    }
 
+    }
     public void runMenu() {
         printHeader();
         while (!exit) {
@@ -37,7 +35,7 @@ public class Menu {
     }
 
     private void printMenu() {
-        displayHeader("Please make a selection");
+        displayHeader("Please make a selection, by typing the number");
         System.out.println("1) Play");
         System.out.println("2) About");
         System.out.println("0) Exit");
@@ -54,7 +52,7 @@ public class Menu {
                 System.out.println("Invalid selection. Numbers only please.");
             }
             if (choice < 0 || choice > 4) {
-                System.out.println("Choice outside of range. Please chose again.");
+                System.out.println("Choice outside of range. Please choose again.");
             }
         } while (choice < 0 || choice > 4);
         return choice;
@@ -70,7 +68,7 @@ public class Menu {
             case 1:
             game.play();
             //System.exit(0);
-               
+
             break;
             case 2:
             System.out.println("");

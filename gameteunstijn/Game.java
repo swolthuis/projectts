@@ -1,4 +1,5 @@
-import java.time.LocalTime; 
+
+import java.time.LocalTime;
 import java.util.*;
 /**
  *  This class is the main class of the "Trumpnation" application. 
@@ -26,6 +27,7 @@ public class Game
     private Timer timer;
     private Menu menu;
     private Boolean finished;
+    private int value;
     /**
      * Create the game and initialise its internal map.
      */
@@ -39,6 +41,7 @@ public class Game
         parser = new Parser();
         timer = new Timer();
         menu = new Menu();
+        value = -1;
     }
 
     /**
@@ -122,6 +125,7 @@ public class Game
     public void play() {
         printWelcome();
         prevLocation = new Stack();
+        timer.calculator();
         // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
@@ -513,17 +517,19 @@ public class Game
 
     private boolean dropItem(Command command) 
     {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know what to drop...
-            System.out.println("Wait a minute drop what?");
-            return false;
-        }
         int value = LocalTime.now().compareTo(timer.endTime);
         while(value == 0 || value > 0){
             System.out.println("Your time is up, you will have to start all over again.");
             System.out.println("Type quit to go back to the menu.");
             return true;
         }
+
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what to drop...
+            System.out.println("Wait a minute drop what?");
+            return false;
+        }
+
         String itemName = command.getSecondWord();
         Item newItem = inventory.get(itemName);
         if(newItem == null){
@@ -547,7 +553,8 @@ public class Game
             System.out.println("Your time is up, you will have to start all over again.");
             System.out.println("Type quit to go back to the menu.");
             return true;
-        }for(String itemName : inventory.keySet()){
+        }
+        for(String itemName : inventory.keySet()){
             output += inventory.get(itemName).getName()+ " : " + inventory.get(itemName).getDescription() + "--- Weight: " + inventory.get(itemName).getWeight() + "\n";
         }
         System.out.println("you are carrying:");
