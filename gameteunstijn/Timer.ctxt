@@ -6,5 +6,5 @@ comment1.target=void\ calculator()
 comment1.text=\r\n\ This\ method\ is\ used\ to\ set\ the\ start\ time\ of\ the\ game\ \r\n\ Give\ the\ player\ the\ amount\ of\ time\ it\ has\ to\ complete\ the\ game\r\n\ It\ converts\ the\ time\ so\ it\ is\ readable\ for\ the\ player\r\n
 comment2.params=
 comment2.target=boolean\ getTime()
-comment2.text=\r\n\ This\ method\ is\ used\ to\ tell\ the\ time\ \r\n\ It\ also\ calculates\ how\ much\ minutes\ the\ player\ has\ left\r\n\ It\ converts\ the\ time\ so\ it\ is\ readable\ for\ the\ player\r\n
+comment2.text=\r\n\ This\ method\ is\ used\ to\ tell\ the\ time\ \r\n\ It\ also\ calculates\ how\ much\ minutes\ the\ player\ has\ left\r\n\ It\ converts\ the\ time\ so\ it\ is\ readable\ for\ the\ player\r\n\ @return\ boolean\ false\ if\ there\ is\ still\ time\ to\ play,\ true\ if\ time\ is\ up.\r\n
 numComments=3

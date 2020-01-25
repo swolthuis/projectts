@@ -1,6 +1,6 @@
 import java.time.LocalTime;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.util.Date;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -34,7 +34,7 @@ public class Timer {
         this.endTime = endTime;
         System.out.println("It is now "+timeStart+ " I have 15 minutes to get President Trump.");
         System.out.println("To check the time type time");
-        //System.out.println(MINUTES.between(startTime, endTime));
+        
 
     }
 
@@ -42,6 +42,7 @@ public class Timer {
      * This method is used to tell the time 
      * It also calculates how much minutes the player has left
      * It converts the time so it is readable for the player
+     * @return boolean false if there is still time to play, true if time is up.
      */
     public boolean  getTime(){
         int value = LocalTime.now().compareTo(endTime);
@@ -54,7 +55,6 @@ public class Timer {
         LocalTime var = LocalTime.now();
         String timeNow = var.format(formatter);
         System.out.println("My watch tells me it's "+timeNow+ " currently");
-
         if(MINUTES.between(LocalTime.now(),endTime)>0){
             System.out.println("I have "+MINUTES.between(LocalTime.now(),endTime)+" minute(s) left to get Trump");
         }else{

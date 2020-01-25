@@ -16,7 +16,6 @@ import java.util.logging.Logger;
  */
 public class Menu {
 
-    //Instance Variables
     private Game game;
 
     boolean exit;
@@ -27,7 +26,7 @@ public class Menu {
         menu.runMenu();
 
     }
-    
+
     public void runMenu() {
         printHeader();
         while (!exit) {
@@ -59,12 +58,12 @@ public class Menu {
             try {
                 choice = Integer.parseInt(keyboard.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Invalid selection. Numbers only please.");
+                System.out.println("Invalid selection. Choose between 1, 2 and 0.");
             }
-            if (choice < 0 || choice > 4) {
-                System.out.println("Choice outside of range. Please choose again.");
+            if (choice < 0 || choice > 2) {
+                System.out.println("That number is not listed, try again");
             }
-        } while (choice < 0 || choice > 4);
+        } while (choice < 0 || choice > 2);
         return choice;
     }
 
@@ -85,7 +84,7 @@ public class Menu {
             System.out.println("About: Trumpnation ");
             System.out.println("Authors: Stijn Wolthuis & Teun de Jong ");
             System.out.println("ITV1H");
-            System.out.println("©2020");
+            System.out.println("2020");
             System.out.println("");
             break;
 

@@ -131,8 +131,8 @@ public class Game
      */
     public void play() {
         printWelcome();
-        prevLocation = new Stack();
         timer.calculator();
+        prevLocation = new Stack();
         // Enter the main command loop. Here we repeatedly read commands and
         // execute them until the game is over.
 
@@ -229,7 +229,7 @@ public class Game
     private void printHelp() {
         System.out.println("Try to extradite Trump from the U.S.");
         System.out.println("You can do this by traveling to places to see if something is going on there.");
-        System.out.println("Travel from location to location and pick up items you deem necessary for your adventure"); 
+        System.out.println("Travel from location to location and pick up items you deem necessary for your to reach your goal"); 
         System.out.println("To get you started, type 'go' and a cardinal direction e.g. 'north'.");
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -238,6 +238,7 @@ public class Game
     /**
      * Try to go in one direction. If there is an exit, enter the new room,
      * otherwise print an error message.
+     * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean goRoom(final Command command) {
         int value = LocalTime.now().compareTo(timer.endTime);
@@ -277,7 +278,7 @@ public class Game
                 return false;
             }
             else {
-                System.out.println("I see a strange door but I can't open it");
+                System.out.println("I see a hidden door but I can't open it");
                 System.out.println("I will need the correct items to open this door");
             }
             //System.out.println("hier zit de secret shit");
@@ -297,7 +298,6 @@ public class Game
     /**
      * "Quit" was entered. Check the rest of the command to see whether we really
      * quit the game.
-     * 
      * @return true, if this command quits the game, false otherwise.
      */
     private boolean quit(final Command command) {
@@ -312,7 +312,7 @@ public class Game
     /**
      * Back command, will put the player to the previous room.
      * If there isn't a previous room it will say so.
-     * @return boolean false.
+     * @return boolean false if there is still time to play, true if time is up.
      */
 
     private boolean goBack(final Command command) {
@@ -323,7 +323,7 @@ public class Game
             return true;
         }
         if(LookPrepare().contains(("secret room."))){
-            System.out.println("I can't go back");
+            System.out.println("I can't go back anymore");
             return false;
         }
         else if(prevLocation.empty()) {
@@ -350,6 +350,7 @@ public class Game
     /**
      * The look command will check in which room the player is.
      * Then it will print what the player sees and give some extra information.
+     * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean look(final Command command) 
     {
@@ -556,7 +557,7 @@ public class Game
      * With the get command the player is able to pick-up items that are on the ground.
      * It checks if the item is in the room or not.
      * Then if the item is in the room the player puts it in it's inventory.
-     * @return boolean false
+     * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean getItem(Command command) 
     {
@@ -600,7 +601,7 @@ public class Game
     /**
      * The drop item command is for the player to drop an item that is in it's inventory.
      * The code will check if the named item is in the inventory, if so it will drop it.
-     * @return boolean false
+     * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean dropItem(Command command) 
     {
@@ -639,7 +640,7 @@ public class Game
 
     /** With the inventory command the player can look what item(s) it has picked up.
      * It also tells the total amount of weight it is carrying and what it can maxium hold.
-     * @return boolean false
+     * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean printInventory(){
         String output = "";
