@@ -1,4 +1,4 @@
-import java.util.*;
+    import java.util.*;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -104,7 +104,7 @@ public class Room
     public String getRoomItems(){
         String output = "";
         for(String itemName : itemsInRoom.keySet()){
-            output += itemsInRoom.get(itemName).name + " : " +  itemsInRoom.get(itemName).getDescription() +" \n" ;
+            output += itemsInRoom.get(itemName).name + " : " +  itemsInRoom.get(itemName).getDescription() + " ---" +itemsInRoom.get(itemName).getWeight() +" kg \n" ;
         }
         return output;
     }

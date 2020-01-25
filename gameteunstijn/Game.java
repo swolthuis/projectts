@@ -33,7 +33,11 @@ public class Game
     public static void main(final String[] args) {
         new Menu().runMenu();
     }
-
+    /**
+     * Constructor for the game. 
+     * Sets a boolean for finished to false, creates rooms, parser, timer and menu.
+     * For the timer, sets a value to -1.
+     */
     public Game() {
         this.finished = false;
         createRooms();
@@ -219,7 +223,7 @@ public class Game
     }
 
     /**
-     * Print out some help information. Here we print some stupid, cryptic message
+     * Print out some help information. Here we print a cryptic message
      * and a list of the command words.
      */
     private void printHelp() {
@@ -308,6 +312,7 @@ public class Game
     /**
      * Back command, will put the player to the previous room.
      * If there isn't a previous room it will say so.
+     * @return boolean false.
      */
 
     private boolean goBack(final Command command) {
@@ -318,7 +323,7 @@ public class Game
             return true;
         }
         if(LookPrepare().contains(("secret room."))){
-            System.out.println("I can't go back anymore");
+            System.out.println("I can't go back");
             return false;
         }
         else if(prevLocation.empty()) {
@@ -328,13 +333,14 @@ public class Game
         else {
             currentRoom = prevLocation.pop();
             System.out.println(currentRoom.getLongDescription());
-            
+
         }
         return false;
     }
 
     /**
-     * makes a String of the current room and description.
+     * Makes a String of the current room and description.
+     * @return String with the current room and description.
      */
     private String LookPrepare() {
         kamer = currentRoom.getLongDescription();
@@ -343,7 +349,7 @@ public class Game
 
     /**
      * The look command will check in which room the player is.
-     * Then it will print what the player sees and give some extra information
+     * Then it will print what the player sees and give some extra information.
      */
     private boolean look(final Command command) 
     {
@@ -515,12 +521,27 @@ public class Game
             System.out.println("I wonder if there are more interesting things here");
         }else if(LookPrepare().contains(("secret room.")))
         {   
-            //code van foto van trump 
+            System.out.println("       ,            _..._            ,");
+            System.out.println("      {'.         .'     '.         .'}");
+            System.out.println("     { ~ '.      _|=    __|_      .'  ~}");
+            System.out.println("    { ~  ~ '-._ (___________) _.-'~  ~  }");
+            System.out.println("  {~  ~  ~   ~.'           '. ~    ~    }");
+            System.out.println("  {  ~   ~  ~ /   /\\     /\\   \\   ~    ~  }");
+            System.out.println("  {   ~   ~  /    __     __    \\ ~   ~    }");
+            System.out.println("   {   ~  /\\/  -<( o)   ( o)>-  \\/\\ ~   ~}");
+            System.out.println("    { ~   ;(      \\/ .-. \\/      );   ~ }");
+            System.out.println("     { ~ ~\\_  ()  ^ (   ) ^  ()  _/ ~  }");
+            System.out.println("      '-._~ \\   (`-._'-'_.-')   / ~_.-'");
+            System.out.println("          '--\\   `'._'\"'_.'`   /--'");
+            System.out.println("              \\     \\`-'/     /");
+            System.out.println("               `\\    '-'    /'");
+            System.out.println("                 `\\       /'");
+            System.out.println("                   '-...-'");
             System.out.println("");
             System.out.println("I see president Trump in front of me");
             System.out.println("I quickly use my rope on him and tie him up");
             System.out.println("I use my tape to tape his mouth shut");
-            System.out.println("I got him I got president Trump, now let's get out of here");
+            System.out.println("I got him! I got president Trump, now let's get out of here");
             System.out.println("");
             System.out.println("Congratulations, you have captured president Trump.");
             System.out.println("type quit to go back to the main menu");
@@ -530,12 +551,12 @@ public class Game
         }
         return false;
     }
- 
 
     /**
      * With the get command the player is able to pick-up items that are on the ground.
      * It checks if the item is in the room or not.
      * Then if the item is in the room the player puts it in it's inventory.
+     * @return boolean false
      */
     private boolean getItem(Command command) 
     {
@@ -579,6 +600,7 @@ public class Game
     /**
      * The drop item command is for the player to drop an item that is in it's inventory.
      * The code will check if the named item is in the inventory, if so it will drop it.
+     * @return boolean false
      */
     private boolean dropItem(Command command) 
     {
@@ -588,18 +610,18 @@ public class Game
             System.out.println("Type quit to go back to the menu.");
             return true;
         }
-        
+
         if(LookPrepare().contains(("secret room."))){
             System.out.println("I can't leave any traces behind here.");
             return false;
         }
-        
+
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
             System.out.println("Wait a minute drop what?");
             return false;
         }
-        
+
         String itemName = command.getSecondWord();
         Item newItem = inventory.get(itemName);
         if(newItem == null){
@@ -617,7 +639,7 @@ public class Game
 
     /** With the inventory command the player can look what item(s) it has picked up.
      * It also tells the total amount of weight it is carrying and what it can maxium hold.
-     *
+     * @return boolean false
      */
     private boolean printInventory(){
         String output = "";
@@ -639,6 +661,7 @@ public class Game
 
     /**
      * The totalWeight method will calculate how much kg the player is carrying and returns it as an integer.
+     * @return int output of total weight.
      */
     private int getTotalWeight(){
         int output = 0;
