@@ -1,11 +1,16 @@
 #BlueJ class context
 comment0.target=Item
-comment0.text=\r\n\ class\ Items\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ (jouw\ naam)\r\n\ @version\ (versie\ nummer\ of\ datum)\r\n
+comment0.text=\r\n\ This\ class\ is\ a\ part\ of\ the\ "Trumpnation"\ application.\ \r\n\ "Trumpnation"\ is\ a\ simple,\ text\ based\ adventure\ game.\r\n\ class\ Items\ -\ This\ class\ holds\ the\ items,\ descriptions\ weight\ and\ name\ of\ those\ items\r\n\r\n\ @author\ Teun\ de\ Jong\ &\ Stijn\ Wolthuis\r\n\ @version\ 2020.01.25\r\n
 comment1.params=name\ weight\ description
 comment1.target=Item(java.lang.String,\ int,\ java.lang.String)
 comment1.text=\r\n\ Constructor\ voor\ objects\ van\ class\ Items\r\n
 comment2.params=
 comment2.target=java.lang.String\ getDescription()
+comment2.text=\r\n\ Puts\ the\ description\ of\ the\ item\ in\ a\ String\ and\ gives\ it\ back\r\n\ @return\ String\ with\ item\ description\r\n
 comment3.params=
 comment3.target=int\ getWeight()
-numComments=4
+comment3.text=\r\n\ Gives\ the\ weight\ of\ the\ item\ back\ as\ an\ integer\r\n\ @return\ int\ with\ item\ weight\r\n
+comment4.params=
+comment4.target=java.lang.String\ getName()
+comment4.text=\r\n\ gives\ the\ name\ of\ the\ item\ back\ as\ a\ string\r\n\ @return\ String\ with\ item\ name\r\n
+numComments=5

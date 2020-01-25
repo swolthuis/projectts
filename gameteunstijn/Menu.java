@@ -27,6 +27,10 @@ public class Menu {
 
     }
 
+    /**
+     * Runs the menu 
+     * @author Stijn Wolthuis
+     */
     public void runMenu() {
         printHeader();
         while (!exit) {
@@ -36,6 +40,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Prints the menu header
+     * @author Stijn Wolthuis
+     */
     private void printHeader() {
         System.out.println("+-----------------------------------+");
         System.out.println("|           TRUMPNATION             |");
@@ -43,13 +51,20 @@ public class Menu {
         System.out.println("+-----------------------------------+");
     }
 
+    /**
+     * Prints a text with the options to choose
+     * @author Stijn Wolthuis
+     */
     private void printMenu() {
         displayHeader("Please make a selection, by typing the number");
         System.out.println("1) Play");
         System.out.println("2) About");
         System.out.println("0) Exit");
     }
-
+    /**
+     * Checks if the input is correct
+     * @author Stijn Wolthuis
+     */
     private int getMenuChoice() {
         Scanner keyboard = new Scanner(System.in);
         int choice = -1;
@@ -66,7 +81,12 @@ public class Menu {
         } while (choice < 0 || choice > 2);
         return choice;
     }
-
+    /**
+     * Procceses the input if 0 it quits
+     * if 1 starts the game
+     * if 2 prints the about page
+     * @author Stijn Wolthuis
+     */
     private void performAction(int choice) {
         Game game = new Game();
         switch (choice) {
@@ -90,7 +110,13 @@ public class Menu {
 
         }
     }
-
+    /**
+     * Checks the input if it has a corresponding number if so gives back response
+     * else it will say to try again
+     * @author Stijn Wolthuis
+     * @param String question, List<String> answers
+     * @return String response 
+     */
     private String askQuestion(String question, List<String> answers) {
         String response = "";
         Scanner keyboard = new Scanner(System.in);
@@ -117,7 +143,11 @@ public class Menu {
         } while (!answers.contains(response));
         return response;
     }
-
+    /**
+     * 
+     * @author Stijn Wolthuis
+     * @param String message
+     */
     private void displayHeader(String message){
         System.out.println();
         int width = message.length() + 6;

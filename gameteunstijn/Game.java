@@ -13,8 +13,8 @@ import java.util.*;
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Stijn Wolthuis & Teun de Jong
- * @version 2020.01.10
+ * @author  Teun de Jong & Stijn Wolthuis
+ * @version 2020.01.25
  */ 
 public class Game 
 {
@@ -37,6 +37,7 @@ public class Game
      * Constructor for the game. 
      * Sets a boolean for finished to false, creates rooms, parser, timer and menu.
      * For the timer, sets a value to -1.
+     * @author  Teun de Jong & Stijn Wolthuis
      */
     public Game() {
         this.finished = false;
@@ -50,6 +51,7 @@ public class Game
     /**
      * Create all the rooms and link their exits together.
      * Also sets items in the rooms.
+     * @author  Teun de Jong
      */
     private void createRooms() {
         ArrayList<Item> itemsWH = new ArrayList();
@@ -121,6 +123,7 @@ public class Game
 
     /**
      * Main menu.
+     * @author Stijn Wolthuis
      */
     public void menu(){
         menu.runMenu();
@@ -128,6 +131,7 @@ public class Game
 
     /**
      * Main play routine. Loops until end of play.
+     * @author  Teun de Jong & Stijn Wolthuis
      */
     public void play() {
         printWelcome();
@@ -146,6 +150,7 @@ public class Game
 
     /**
      * Print out the opening message for the player.
+     * @author  Teun de Jong
      */
     private void printWelcome() {
         System.out.println();
@@ -170,6 +175,7 @@ public class Game
      * Given a command, process (that is: execute) the command.
      * 
      * @param command The command to be processed.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return true If the command ends the game, false otherwise.
      */
     private boolean processCommand(final Command command) {
@@ -225,6 +231,7 @@ public class Game
     /**
      * Print out some help information. Here we print a cryptic message
      * and a list of the command words.
+     * @author  Teun de Jong & Stijn Wolthuis
      */
     private void printHelp() {
         System.out.println("Try to extradite Trump from the U.S.");
@@ -238,6 +245,7 @@ public class Game
     /**
      * Try to go in one direction. If there is an exit, enter the new room,
      * otherwise print an error message.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean goRoom(final Command command) {
@@ -298,6 +306,7 @@ public class Game
     /**
      * "Quit" was entered. Check the rest of the command to see whether we really
      * quit the game.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return true, if this command quits the game, false otherwise.
      */
     private boolean quit(final Command command) {
@@ -312,6 +321,7 @@ public class Game
     /**
      * Back command, will put the player to the previous room.
      * If there isn't a previous room it will say so.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
 
@@ -341,6 +351,7 @@ public class Game
     /**
      * Makes a String of the current room and description.
      * @return String with the current room and description.
+     * @author  Teun de Jong & Stijn Wolthuis
      */
     private String LookPrepare() {
         kamer = currentRoom.getLongDescription();
@@ -350,6 +361,7 @@ public class Game
     /**
      * The look command will check in which room the player is.
      * Then it will print what the player sees and give some extra information.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean look(final Command command) 
@@ -557,6 +569,7 @@ public class Game
      * With the get command the player is able to pick-up items that are on the ground.
      * It checks if the item is in the room or not.
      * Then if the item is in the room the player puts it in it's inventory.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean getItem(Command command) 
@@ -601,6 +614,7 @@ public class Game
     /**
      * The drop item command is for the player to drop an item that is in it's inventory.
      * The code will check if the named item is in the inventory, if so it will drop it.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean dropItem(Command command) 
@@ -640,6 +654,7 @@ public class Game
 
     /** With the inventory command the player can look what item(s) it has picked up.
      * It also tells the total amount of weight it is carrying and what it can maxium hold.
+     * @author  Teun de Jong & Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
     private boolean printInventory(){
@@ -662,6 +677,7 @@ public class Game
 
     /**
      * The totalWeight method will calculate how much kg the player is carrying and returns it as an integer.
+     * @author  Teun de Jong
      * @return int output of total weight.
      */
     private int getTotalWeight(){

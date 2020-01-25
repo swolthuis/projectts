@@ -5,15 +5,15 @@ import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import static java.time.temporal.ChronoUnit.MINUTES;
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.
+ * This class is part of the "Trumpnation" application. 
+ * "Trumpnation" is a very simple, text based adventure game.
  * 
  * This class holds the timer of the game
  * It is used to time the time of the player
  * And for the player to get the time
  *
- * @author  Stijn Wolthuis en Teun de Jong
- * @version 1
+ * @author  Teun de Jong & Stijn Wolthuis
+ * @version 2020.01.25
  */
 public class Timer {
     private String timeStart;
@@ -24,6 +24,7 @@ public class Timer {
      * This method is used to set the start time of the game 
      * Give the player the amount of time it has to complete the game
      * It converts the time so it is readable for the player
+     * @author Stijn Wolthuis
      */
     public void calculator(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -41,7 +42,9 @@ public class Timer {
     /**
      * This method is used to tell the time 
      * It also calculates how much minutes the player has left
+     * If the player doens't have any time left it will say so
      * It converts the time so it is readable for the player
+     * @author Stijn Wolthuis
      * @return boolean false if there is still time to play, true if time is up.
      */
     public boolean  getTime(){

@@ -1,4 +1,4 @@
-    import java.util.*;
+import java.util.*;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -9,8 +9,8 @@
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Teun de Jong & Stijn Wolthuis
+ * @version 2020.01.25
  */
 
 public class Room 
@@ -63,7 +63,7 @@ public class Room
     /**
      * Return a string describing the room's exits, for example
      * "Exits: north west".
-     * @return Details of the room's exits.
+     * @return String Details of the room's exits.
      */
     private String getExitString()
     {
@@ -81,26 +81,44 @@ public class Room
      * Return the room that is reached if we go from this room in direction
      * "direction". If there is no room in that direction, return null.
      * @param direction The exit's direction.
-     * @return The room in the given direction.
+     * @return String The room in the given direction.
      */
     public Room getExit(String direction) 
     {
         return exits.get(direction);
     }
 
+    /**
+     * Gives all the item names in the current room
+     * @param item name.
+     * @return String All items in the current room.
+     */
     public Item getItem(String name){
         return itemsInRoom.get(name);
     }
 
+    /**
+     * Removes the items from the current room
+     * @param item name.
+     */
     public void removeItem(String itemName){
         itemsInRoom.remove(itemName);
 
     }
 
+    /**
+     * Puts a new item in the current room
+     * @param Item newname. 
+     */
+    
     public void setItem(Item newitem){
         itemsInRoom.put(newitem.name, newitem);
     }
-
+    /**
+     * Looks for every item in the current room
+     * puts all items with its name description and weight in the string output
+     * @return String output with a list with all items in the current room
+     */
     public String getRoomItems(){
         String output = "";
         for(String itemName : itemsInRoom.keySet()){
